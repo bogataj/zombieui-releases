@@ -202,6 +202,13 @@ Mudlet's Keys stays yours: ZombieUI leaves it alone.
   (the gauges show them; `zui gag off` brings them back), the game's `*** KEEPALIVE MESSAGE ***`
   (`set keepalive`) is hidden (`zui gag keepalive off` shows it again), and what ZombieUI reads on
   its own at a login or a cast's end (score, spells, skills, buffs, party) doesn't show.
+- **Elf tales:** a tale's lines ("Gam says 'In the beginning there was nothing.'") show in the main
+  window as the game sends them but stay out of the Says and All feeds. ZombieUI knows each tale by
+  its words: when one ends it says which it was and whether you have now heard all of it. The
+  SESSION card's Tales row counts this season's five heard in full since the reboot (your own
+  recitals too); click it, or type `zui tales` (`zui tales all` for every season). Tales you heard
+  before ZombieUI counted them: `zui tales heard factions`, or `zui tales heard all` for the season's
+  five (`zui tales unheard` takes it back).
 - **The time of day** sits on the right of the vitals bar. Until the game has confirmed the clock
   it reads `sync`: a click walks you to ZombieCity's clocktower to look at it.
 
