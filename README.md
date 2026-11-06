@@ -22,8 +22,17 @@ for next time).
 
 You start with a map of ZombieCity and Ravenkall, and the outworld with its area entrances marked
 (most of them named): the rest of the map is yours to make as you go in. It is added to any map
-you have and never replaces it. To update, install the new `.mpackage` the same way: your
-settings, map and notes are kept.
+you have and never replaces it.
+
+## Updating
+
+Once a day ZombieUI asks the releases page whether there is a newer version, and if there is it
+tells you when you log in. `zui update` downloads it and installs it in place: your settings,
+map and notes are kept, and you stay logged in. Nothing is installed until you type it.
+`zui update check` looks right away, and `zui update off` (or `on`) stops or starts the daily
+look. You can also update by hand: install the new `.mpackage` the way you installed the first
+one. If a new version ever fails to start, drag an earlier one from the
+[releases page](https://github.com/bogataj/zombieui-releases/releases) onto Mudlet.
 
 ## Layout
 
