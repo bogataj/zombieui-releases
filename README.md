@@ -199,8 +199,9 @@ Mudlet's Keys stays yours: ZombieUI leaves it alone.
   target), and `@t` anywhere in a command, which becomes your target's word. `kill <word>` goes
   to the game as you typed it, and teaches ZombieUI the word for that NPC.
 - **Hidden lines:** the data prompt shows as a plain `>`, the game's `hp: sp:` lines are left out
-  (the gauges show them; `zui gag off` brings them back), and what ZombieUI reads on its own at a
-  login or a cast's end (score, spells, skills, buffs, party) doesn't show.
+  (the gauges show them; `zui gag off` brings them back), the game's `*** KEEPALIVE MESSAGE ***`
+  (`set keepalive`) is hidden (`zui gag keepalive off` shows it again), and what ZombieUI reads on
+  its own at a login or a cast's end (score, spells, skills, buffs, party) doesn't show.
 - **The time of day** sits on the right of the vitals bar. Until the game has confirmed the clock
   it reads `sync`: a click walks you to ZombieCity's clocktower to look at it.
 
