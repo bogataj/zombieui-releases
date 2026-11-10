@@ -209,6 +209,13 @@ Mudlet's Keys stays yours: ZombieUI leaves it alone.
   recitals too); click it, or type `zui tales` (`zui tales all` for every season). Tales you heard
   before ZombieUI counted them: `zui tales heard factions`, or `zui tales heard all` for the season's
   five (`zui tales unheard` takes it back).
+- **Your bless and profane sacrament:** a cleric's or paladin's bless, and a death knight's profane
+  sacrament for the undead, each last until the reboot (or until you quit), and you get one of each
+  every reboot. ZombieUI notes who gave it and what it gave ("You feel wiser."): the EFFECTS card
+  shows `Bless WIS` or `Sacrament CON`, and the SESSION card's Bless and Sacrament rows say whether
+  you have this reboot's (red when you quit or died and it's gone). `zui bless` tells more. One from
+  before ZombieUI saw it: `zui bless wis` (any gift: `str`, `AC`, `fire`...) or `zui bless sacrament
+  con`; `zui bless none` (or `zui bless sacrament none`) takes it back.
 - **The time of day** sits on the right of the vitals bar. Until the game has confirmed the clock
   it reads `sync`: a click walks you to ZombieCity's clocktower to look at it.
 
