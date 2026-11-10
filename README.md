@@ -41,6 +41,7 @@ the main console: columns left and right, and bands above and below. By default
 chat runs above the main console, and the right column has the map, room and party, then effects
 beside session, and stats beside the run you have loaded. The column width and text size follow
 the window size. `zui layout` shows the placement and changes it; your choices are kept in `zui_data/`.
+`zui layout undo` takes back the last change made with its commands, a reset or a preset too.
 
 Right-click the map and open the **ZombieUI** menu for walk here, I am here, move to the
 mapping area, and terrain for the 3D diorama ground.
@@ -247,7 +248,9 @@ like (ZombieUI never sends it through the game).
   `zshare show` marks the rooms on the map.
 - Places, runs and rides are moved onto your rooms. A place of yours with the same name stays
   yours (`zshare take place <name> as <new>` takes theirs). The preview lists every command a
-  place sends on arriving: read them before you take someone's places.
+  place sends on arriving, and every command an exit or a ride of the file sends on the way
+  through (`press opal`, `buy transport to ravenkall`): read them before you take someone's
+  file. Those of exits and rides go to the game as they are, never through your aliases.
 - `zshare apply` does it, `zshare undo` takes the last import back, and `zshare list` shows
   your imports. A file from someone you imported from before is recognised at once; rooms they
   see differently now are listed, and `zshare theirs` takes their text.
