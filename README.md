@@ -211,7 +211,8 @@ suggest from what you know.
   out by itself) and gives a cast on a party member the same: what it measured this session,
   else what it measured last time, else ten minutes. The tag turns amber in the last minute and red when the
   time is up; `zload` shows the time each has left. What the game does say wins over the
-  clock: their `buffs report`, "is already surrounded by...", their death.
+  clock: their `buffs report` and "is already surrounded by...". (A death doesn't end a
+  buff: it is on them again when they are back, with the time it had.)
 - A party member's tags come from what you see cast on them, and from their `buffs report`,
   whether they say it in the room, tell it to you or send it to the party (`buffs report
   party`): the buffs it names are up, and a timed buff it no longer names is taken off. A
