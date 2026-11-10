@@ -18,8 +18,9 @@ for next time).
    `zui setup yes` to set them. This replaces your game prompt with a data line ZombieUI reads
    and hides; `prompt old` in the game gives you your own prompt back (and `zui prompt` sets
    ZombieUI's again). It also removes Mudlet's
-   own generic mapper, if you have it (ZombieUI does the mapping), and Mudlet's base UI steps
-   aside for ZombieUI's (`baseui show` brings it back).
+   own generic mapper and base UI, if you have them: ZombieUI does the mapping and is the
+   interface (until then the base UI only steps aside). Mudlet's Package Manager installs
+   either again.
 
 You start with a map of ZombieCity and Ravenkall, and the outworld with its area entrances marked
 (most of them named): the rest of the map is yours to make as you go in. It is added to any map
@@ -130,6 +131,9 @@ fight for you (`help botting`).
   outworld squares as you walk through them.
 - `(goto castle)` in a place's commands or a run's path is routed from wherever the path has
   got to.
+- The way goes out a command at a time (`20 w` is one), the next when the rooms of the one
+  before are in: a refused move ends the walk there, with the game's reason, and nothing more
+  is sent. `zstop` stops a walk; what the command already sent still has to do, it does.
 - `sgoto <npc>` asks your spyglass (`find <npc>`) and walks the directions it gives. Numpad `/`
   with no run loaded does that for your kill target.
 
@@ -176,6 +180,42 @@ suggest from what you know.
   starred. Click to pick or drop one. Nothing is saved until the last step.
 - `zload suggested` takes the suggestions as they are. `zload` shows the loadout and how to
   change one thing at a time (`zload buff iron will`, `zload heal cure serious wounds`...).
+- The buffs a loadout keeps up show on the cards when they are down: your own on the EFFECTS
+  card, and one you keep on a party member (`zload buff force shield at Kremar`) as a red tag
+  on their row of the PARTY card, green once it is up. The rebuff key casts the next one that
+  is down. One kept on someone who isn't in your party now is left alone until they are.
+- Keeping a party buffed: a buff can be kept `at tank` or `at party` instead of on one name
+  (`zload buff ward of steel at tank`, `zload buff iron will at party`). The tank is
+  the party's leader, as the game has it (it follows when the lead changes, and it is you when
+  you lead or play alone, in a party of one or in none); `zload tank Kremar` names someone
+  else for that party (`zload tank none`: the leader again). A buff that stacks takes
+  a number (`zload buff shield of protection x2 at tank`), and a spell that works on yourself
+  only can't be kept on anyone else.
+- The rebuff key casts what matters most first: greater protections, then stun protection
+  (iron will and its kin), lesser protections, armour class, everything else; in each of
+  those the tank first, then you, then the others. `zload buff <spell> first` (or `last`,
+  `normal`) moves one buff out of that order. Someone who isn't in the room, or is
+  link-dead, is skipped.
+- `zload try very quick` has the key cast every buff that way (`zload buff <spell> try quick`
+  for one; `try none` for none). A lesser and a greater protection against the same damage
+  don't go on one person together: the one the game would refuse shows as covered.
+- The PARTY card follows the party's own messages at once, also while you are idle: who left,
+  who joined, who leads now, with the places moved as the game moves them. A member who died
+  has a ghost by their name, a link-dead one an x.
+- `zbuffs` shows it all at a glance: every buff you keep on the party, member by member, how
+  long each has left, which one the key casts next, and what each time is based on. A tag
+  on the PARTY card counts down through its last two minutes, and a line tells you when a
+  buff goes due.
+- Nobody tells you when a buff on someone else ends, so ZombieUI times it: it measures how
+  long your own casts last on you (from the game's `buffs` list, and only where a buff ran
+  out by itself) and gives a cast on a party member the same: what it measured this session,
+  else what it measured last time, else ten minutes. The tag turns amber in the last minute and red when the
+  time is up; `zload` shows the time each has left. What the game does say wins over the
+  clock: their `buffs report`, "is already surrounded by...", their death.
+- A party member's tags come from what you see cast on them, and from their `buffs report`,
+  whether they say it in the room, tell it to you or send it to the party (`buffs report
+  party`): the buffs it names are up, and a timed buff it no longer names is taken off. A
+  report from someone outside your party changes nothing.
 - A reinc can have several: `zload build party` makes another, `zload use main` switches which
   one the keys use, and `zload copy`/`zload delete` copy or throw one away.
 - Presets of your own in `user.lua` (`zui.user.preset`) are starting points for `zload from`.
@@ -213,6 +253,19 @@ Mudlet's Keys stays yours: ZombieUI leaves it alone.
   (the gauges show them; `zui gag off` brings them back), the game's `*** KEEPALIVE MESSAGE ***`
   (`set keepalive`) is hidden (`zui gag keepalive off` shows it again), and what ZombieUI reads on
   its own at a login or a cast's end (score, spells, skills, buffs, party) doesn't show.
+- **Magic words:** a spell that is cast shows its magic words ("Uione utters the magic words 'vis
+  aversor'"). ZombieUI shows the spell's name in their place ("Uione utters the magic words 'shield
+  of protection'"), for your own casts and everyone else's, whatever sentence the spell is cast
+  with ("You briskly chant 'iron will'"). The name stands out in gold: `zwords color` shows other
+  colours to click, `zwords color deep_pink` takes any of Mudlet's colour names, and `zwords color
+  none` leaves the name in the colour of its line. It knows the words of some 760 spells; words it
+  doesn't know stay as they are, and so does someone merely saying the words. Only what you see
+  changes: your own triggers still get the line as the game sent it. `zwords` shows whether it is
+  on (`zwords off` and `zwords on`), `zwords list` every spell's words, and `zwords <text>` the ones
+  with the text in the words or in the spell's name (`zwords shield`). `zwords set vis aversor =
+  SoP` gives words a name of your own, or names words ZombieUI doesn't know (click an entry of the
+  list to change it); `zwords set vis aversor =` takes yours away again, and `zwords mine` lists
+  them. Yours are kept with your settings, so an update never touches them.
 - **Elf tales:** a tale's lines ("Gam says 'In the beginning there was nothing.'") show in the main
   window as the game sends them but stay out of the Says and All feeds. ZombieUI knows each tale by
   its words: when one ends it says which it was and whether you have now heard all of it. The
@@ -275,5 +328,6 @@ you use most; `zmap help` lists them all. ZombieMUD has its own `map` command, s
 
 What ZombieUI comes with can be looked up: `zui lookup <spell or skill>` (`zui lookup force
 shield`, `zui lookup fs`) shows its type, the tag its effect shows with on the cards, its shortcut
-words, the guilds that teach it and from what level, and whether you have it. `zfx tags <text>`
-and `zshort all <text>` search the tags and every shortcut word; `zui help lists` has the rest.
+words, its magic words, the guilds that teach it and from what level, and whether you have it.
+`zfx tags <text>`, `zshort all <text>` and `zwords <text>` search the tags, every shortcut word
+and the magic words; `zui help lists` has the rest.
