@@ -199,6 +199,13 @@ suggest from what you know.
 - `zload try very quick` has the key cast every buff that way (`zload buff <spell> try quick`
   for one; `try none` for none). A lesser and a greater protection against the same damage
   don't go on one person together: the one the game would refuse shows as covered.
+- Short score and autoloot around a party: `zparty auto on` has ZombieUI set them as your
+  place in a party changes. Leading one (or making it): `sc party`, so the others see your hp
+  and sp, and `set autoloot own`. A member of someone else's: `sc on` and `set autoloot off`.
+  On your own again: `sc on` and `set autoloot own`. It follows the lead passing to you or
+  from you, sends only what differs from what is set, and only while you are at the
+  keyboard. It is off until you turn it on; `zparty` shows the three states and changes what
+  each sets (`zparty member autoloot own`, `zparty tank sc keep`).
 - The PARTY card follows the party's own messages at once, also while you are idle: who left,
   who joined, who leads now, with the places moved as the game moves them. A member who died
   has a ghost by their name, a link-dead one an x.
