@@ -16,7 +16,8 @@ for next time).
    **Watch > Custom > Releases** on the releases repository.
 4. Log in. ZombieUI welcomes you and lists the game settings it reads from; type
    `zui setup yes` to set them. This replaces your game prompt with a data line ZombieUI reads
-   and hides; `prompt old` in the game gives you your own prompt back. It also removes Mudlet's
+   and hides; `prompt old` in the game gives you your own prompt back (and `zui prompt` sets
+   ZombieUI's again). It also removes Mudlet's
    own generic mapper, if you have it (ZombieUI does the mapping), and Mudlet's base UI steps
    aside for ZombieUI's (`baseui show` brings it back).
 
