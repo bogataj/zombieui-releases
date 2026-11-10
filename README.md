@@ -74,6 +74,15 @@ The entrances and their names come from the players' own
 [outworld map](https://zommap.github.io/) and the r/zombiemud wiki, checked against the routes
 the wiki gives.
 
+Following a party's leader (`party follow`), the game walks you and shows each room in brief,
+whatever you have set. ZombieUI reads the way you went from who left before you ("Taosy leaves
+north."), and follows the map along the exits it has; on the outworld it steps a square on. It
+never adds a room or an exit while you are being led, with mapping on too: where the leader goes
+off your map, the map says it doesn't know where you are until you are back in a room it knows
+(`look` shows the room in full and finds you at once). A step in the dark ("It's too dark to
+see.") is followed the same way, by the exit you took; led through the dark, where nobody is
+seen leaving, the map waits until it can see again.
+
 A hidden way out of a room (`press opal`, `pull lever`) isn't taken for an exit when you just type
 it: a typed `recall` or teleport would be mapped as one. Use `zmap via press opal` instead. It
 sends the command, links the room it leads to through that command, and routes then use it like
