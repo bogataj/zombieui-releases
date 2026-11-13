@@ -134,6 +134,12 @@ fight for you (`help botting`).
 - The way goes out a command at a time (`20 w` is one), the next when the rooms of the one
   before are in: a refused move ends the walk there, with the game's reason, and nothing more
   is sent. `zstop` stops a walk; what the command already sent still has to do, it does.
+- A walk of 10 moves or more is made in the game's brief mode, which is smoother over long
+  distances and on the outworld: ZombieUI sends `brief` as the walk starts, and on arriving
+  `brief` again and a `look`, so the room you end in shows in full. That goes for `goto`
+  and for the way to a run's next stop. If you play in brief mode yourself, nothing is
+  switched. `goto brief off` turns it off, `goto brief on` on again, and `goto brief 25` sets
+  from how many moves.
 - `sgoto <npc>` asks your spyglass (`find <npc>`) and walks the directions it gives. Numpad `/`
   with no run loaded does that for your kill target.
 
@@ -157,15 +163,31 @@ They are kept in `<profile>/zui_data/places.json`.
 
 ### Castles
 
-- `goto castle` walks to the outworld castle of the character you're playing. `goto home` walks
-  to their castle in the castle area. `goto <player>` walks to that player's outworld castle,
-  or to their home if that's all that is known. `goto castles` lists the castle owners known.
+- `goto home` walks into your castle in the castle area: to the catapult at the area's
+  entrance, `shoot home`, `enter`, and ends in the castle's first room. `goto castle` walks to
+  your outworld castle's square and stops outside, as `goto <player>` does for that player's
+  outworld castle. `goto castles` lists the castle owners known.
+- Living in someone else's castle, as a co-ruler or a guest, or with only one kind of castle?
+  Say where home is, for the character you're playing:
+  - `goto home is 25 23`: the castle at 25 23 in the castle area (the numbers its owner shoots
+    the catapult with).
+  - `goto home is <player>`: into that player's outworld castle. `goto castle is <player>`
+    makes `goto castle` walk to that castle's square.
+  - `goto home is castle`: into the castle `goto castle` goes to.
+  - `goto home is own` and `goto castle is own`: your own castle again.
+  - `goto add home` makes the room or square you're on home, like any place.
+- `goto then home 2u n` adds a path of your own from the first room further in.
+- Castles are not put on the map: their rooms are their owner's own, and a map can be shared.
+  Inside one, the map's panel says so instead of asking where you are, with what is known of
+  it: an outworld castle's name and owner ("The Castle of Astral forest", "Earendil's
+  castle", or that it is yours), a castle-area castle by the catapult's coordinates, and
+  whether you rule there.
+  From a castle's first room, `goto <place>` leaves by its `cs` exit and goes on from Central
+  Square. Deeper inside, walk back to the first room before you `goto`.
+- The catapult's room has to be on your map: walk into it once with `zmap on`.
 - Owners come from `finger <player>` ("The Lord of the outworld Castle 'Astral forest'.").
   Castle squares come from passing them on the outworld ("The Castle of Astral forest").
   Both are kept up to date as you play.
-- Home is learned by walking into your castle's first room. The game shows its owner (and
-  co-rulers) "[ The Castle room: 0 ]" there, so ZombieUI knows the castle is yours. `goto add
-  home` sets it by hand. Every character has its own home.
 - Famous castles get a name of their own with `goto add`.
 
 ## Loadouts
