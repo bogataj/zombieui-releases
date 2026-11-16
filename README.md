@@ -108,15 +108,81 @@ load it), and `zrun help` shows the commands.
   target (`@t`, `kt`), and the RUN card counts the kills.
 - `zrun info` lists every stop: where, what to kill, and what your NPC knowledge says about it
   (exp, aggro, least resist, KYA). `zrun here` finds the stop you're at after a death or a
-  detour, and `zrun go 3` walks to stop 3.
+  detour, and `zrun go 3` walks to stop 3. `zrun go elmo` goes to the stop with that NPC
+  in the loaded run, from wherever you are. Target words and full names match without regard
+  to case; exact matches take precedence over partial names. If several stops match, it lists
+  their numbers for you to choose.
 - `zrun record <name>` writes a run down as you play: walk to each stop and press **numpad /**
   there, or kill something and the room becomes a stop with that NPC. `zrun kill orc 2`,
   `zrun note ...` and `zrun warn ...` change the stop you're at; `zrun add`, `zrun del` and
   `zrun move` change the round. `zrun save` keeps it.
+- `zrun end default cs` chooses your usual end place. `zrun end run castle` saves a
+  different choice for the loaded script; `zrun end cs` overrides it for this round.
+  Use a saved place or `castle` (outside your castle), `stay` to remain at the end,
+  or `loop` to start the round again. Use `inherit` in place of the destination to
+  remove that override. These choices belong to your character and are not shared.
+- **Next at the last stop** goes to the chosen end place. With no choice, it stays there.
+  `zrun finish` goes there immediately or retries an interrupted end walk. A finished round
+  stays finished until you select another stop, for example `zrun go 1`. A temporary end
+  choice survives reload but is cleared when you explicitly load a run.
 
 Runs are files in `<profile>/zui_data/runs/`. If a move is refused, or you end up somewhere else
 than the way expected, ZombieUI tells you and the run stays where it was. Runs never move or
 fight for you (`help botting`).
+
+## Selling
+
+`zsell` starts a selling trip; `zrun sell` does the same while saving the loaded run's progress.
+Your position, run stop and kill counts are saved for `zsell return`. A blocked return stops
+where you actually are and keeps the return checkpoint. Selling does not fight blockers.
+Shops are visited **armour → weapon → general** to sell heavier equipment first.
+Inventory and keep preparation run once at the armour shop. Each shop checks that your
+configured followers have arrived before selling. An optional deposit checks your cash separately.
+`mule fix_weight` runs after each sale from a mule. Your own `fix_weight` runs at the end,
+after any deposit.
+
+The three ZombieCity shops come with the starter map. Shop positions are shared game data;
+your choice of route, containers, protected items and deposit destination belongs to your
+character. To add another set of shops or correct a position, stand in each shop and use the
+corresponding command, or append the name of a saved `goto` place:
+
+```
+zsell shop zombiecity general
+zsell shop zombiecity armour
+zsell shop zombiecity weapon
+```
+
+Use another route name, such as `grimhildr`, for a second set of shops; `zsell route grimhildr`
+selects it by default. `zsell grimhildr` selects it for one trip.
+Shop places are named `shop-<route>-general`, `shop-<route>-armour` and
+`shop-<route>-weapon`; they can also be shared with `zshare export places <names>`.
+
+- Inventory is enabled initially. Add every other source you use with `zsell source add bag`,
+  `zsell source add disc`, `zsell source add servant` or `zsell source add mule`.
+  Custom container IDs are accepted; `zsell source del bag` removes one.
+- Arrows, shurikens and fragments are protected by default. `zsell protect add <item id>` adds
+  your own protection; `zsell protect del <item id>` removes it. Worn equipment and existing
+  keep markings are preserved. Protected objects in containers are taken into inventory and
+  kept there; servants use `scom keep`. A mule has no keep command: it drops protected items
+  for immediate pickup and keeping before selling. These items briefly lie on the ground;
+  use inventory or a bag for items you do not want handled this way. Failed or unrecognized
+  protection replies pause the trip before selling. Keep markings are never cleared.
+- Discs, mules and servants must appear as yours in the room listing. Missing followers or
+  ambiguous selectors pause the trip after 15 seconds. Bring them to you, then `zsell resume`.
+  Following and tanking settings are left under your control. For a custom disc identifier,
+  use `zsell source add <id> disc`.
+- Stand at your bank or booth and use `zsell bank here` or `zsell booth here` (a named `goto`
+  place also works). Choose `zsell deposit bank`, `booth` or `none` (the default).
+  `zsell reserve 8000` keeps that amount of cash when depositing; `zsell reserve 0` deposits all.
+  Deposits use your cash and collect coins from configured bags and discs. Coins held by
+  a servant or mule must be retrieved manually before the deposit.
+- `zsell config` shows settings; **`zsell preview` shows the planned commands without sending
+  them**. Check your sources and protected IDs before the first real trip.
+- `zsell stop` pauses; `zsell resume` continues. After a reply that cannot be verified,
+  inspect the visible game output: `zsell retry` explicitly repeats the command. `zsell accept`
+  acknowledges a sale or deposit already handled; protection steps cannot be skipped.
+- At the end, `zsell return` walks back. `zsell cancel` discards the trip and leaves you where
+  you are. A reload restores the trip paused and never repeats an uncertain sale or deposit.
 
 ## Places
 
@@ -144,6 +210,12 @@ fight for you (`help botting`).
   with no run loaded does that for your kill target.
 
 They are kept in `<profile>/zui_data/places.json`.
+
+`zwalk <path>` follows directions you supply, for example `zwalk 3n(open gate)2e`.
+Use `h/j/k/l` for northwest/northeast/southwest/southeast. Start at a known map position
+in verbose mode: this walk keeps full room descriptions so new rooms can be mapped.
+Write `(!enter)` when a game command must lead to a room; the walk stops if it does not.
+Ordinary `(open gate)` allows a reply without moving. `zstop` stops the walk.
 
 ### Rides and guilds
 
