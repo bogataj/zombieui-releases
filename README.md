@@ -31,6 +31,8 @@ you have and never replaces it.
 Once a day ZombieUI asks the releases page whether there is a newer version, and if there is it
 tells you when you log in. `zui update` downloads it and installs it in place: your settings,
 map and notes are kept, and you stay logged in. Nothing is installed until you type it.
+Before replacing the package, ZombieUI checks the download and saves a recovery copy in
+`zui_data/update/rollback/ZombieUI.mpackage`. If installation fails, it reinstalls that copy.
 `zui update check` looks right away, and `zui update off` (or `on`) stops or starts the daily
 look. You can also update by hand: install the new `.mpackage` the way you installed the first
 one. If a new version ever fails to start, drag an earlier one from the
@@ -253,7 +255,8 @@ Ordinary `(open gate)` allows a reply without moving. `zstop` stops the walk.
   Inside one, the map's panel says so instead of asking where you are, with what is known of
   it: an outworld castle's name and owner ("The Castle of Astral forest", "Earendil's
   castle", or that it is yours), a castle-area castle by the catapult's coordinates, and
-  whether you rule there.
+  whether you rule there. If you log in inside a numbered castle room, the panel shows
+  that room number and keeps both maps hidden. A fresh connection clears your previous position.
   From a castle's first room, `goto <place>` leaves by its `cs` exit and goes on from Central
   Square. Deeper inside, walk back to the first room before you `goto`.
 - The catapult's room has to be on your map: walk into it once with `zmap on`.
@@ -420,6 +423,11 @@ like (ZombieUI never sends it through the game).
 - `zshare apply` does it, `zshare undo` takes the last import back, and `zshare list` shows
   your imports. A file from someone you imported from before is recognised at once; rooms they
   see differently now are listed, and `zshare theirs` takes their text.
+- If an import pauses on a write error, fix the write problem and use `zshare apply` to retry.
+  After a reload, import the same file again to resume. Undo keeps places and runs you edited
+  afterwards, personal NPC notes, and sightings you recorded after importing. It also keeps
+  places and runs from older imports whose ledger cannot verify them. For an older map import
+  that lacks room identities, use `zshare undo force` only if the room numbers still match.
 
 ## Commands
 
