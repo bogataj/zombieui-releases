@@ -57,6 +57,7 @@ mapping area, and terrain for the 3D diorama ground.
 | indoor | description, then `There are N obvious exits: ...` | mapped |
 | city | 15-column street map (you are `X`) beside the description | mapped; the map is shown in the room card |
 | wild | terrain map (you are `@`) beside the description | not mapped; the terrain map is shown in the room card |
+| Corn Fields and Savannah | terrain beside the room description (you are `*`) | shown on built-in coordinate grids |
 | Castle Area | a window onto roads and castle plots (you are `*`) | shown on a coordinate grid |
 | bazaar | a window onto the shopping booths (you are `*`) | shown on a built-in coordinate grid |
 
@@ -81,6 +82,12 @@ Vacant (`s`), reserved (`#`), and built (`c`) are the last states seen at those 
 the exact coordinate. Private castle interiors still show the castle details.
 `goto castlearea 25 23` walks to that square outside. Routes between these areas and the
 rest of the world use the mapped bazaar entrance or catapult.
+
+Corn Fields and Savannah show their full terrain on your first visit. Coordinates start at
+the upper left. At the Bob Farm, south takes you into Corn Fields at `15, 2`. In Savannah,
+`path` brings you in from the outworld at `5, 3`, and `out` takes you back. Use
+`goto cornfields 15 2` or `goto savannah 5 3` to walk to those entrances.
+If several squares look alike, the marker appears when movement, `look`, or `map` locates you.
 
 The game doesn't name an area at its entrance on the outworld (it is only "the entrance to
 something special"), so a new area is named after its first room until you rename it (`zmap
