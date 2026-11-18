@@ -57,13 +57,30 @@ mapping area, and terrain for the 3D diorama ground.
 | indoor | description, then `There are N obvious exits: ...` | mapped |
 | city | 15-column street map (you are `X`) beside the description | mapped; the map is shown in the room card |
 | wild | terrain map (you are `@`) beside the description | not mapped; the terrain map is shown in the room card |
-| grid | a field of squares (the bazaar; you are `*`) | mapped square by square |
+| Castle Area | a window onto roads and castle plots (you are `*`) | shown on a coordinate grid |
+| bazaar | a window onto the shopping booths (you are `*`) | shown on a built-in coordinate grid |
 
-Each room is keyed by kind + exits + description. Walking through an exit the map already
+Each mapped room is keyed by kind and description. Walking through an exit the map already
 knows is trusted first, so rooms with the same description still work if you walk into them.
 With mapping on (`zmap on`), a room is only added for a step from a room the map knows, or for a
 step in from a known outworld square (a new area). When the map doesn't know where you are,
 nothing is added until it finds you again; `zmap start <area>` begins a new area by hand.
+
+The ZombieCity bazaar opens on a 20-by-20 grid. The entrance is at `1, 7`. A west step from
+that cell takes you back to the alley. A booth is `o`, a slot last seen empty is `.`, and
+`?` means the slot has yet to be seen. Each room reading refreshes the booths it shows.
+Previously mapped booth rooms are kept in the
+**Bazaar (legacy map)** area, with a backup of their original layout in `zui_data/`.
+Use `goto bazaar 12 8` to walk to a slot by its coordinates, or `goto add mybooth` while
+standing there to save it by name.
+
+The Castle Area uses the catapult's coordinates. Its southern exit is at `8, 1`. The grid
+shows all roads and plots from the start. A plot is `o` until the game shows its status.
+Vacant (`s`), reserved (`#`), and built (`c`) are the last states seen at those coordinates.
+`look` or `map` refreshes the surrounding plots. After `shoot home`, `la sign` can place your marker at
+the exact coordinate. Private castle interiors still show the castle details.
+`goto castlearea 25 23` walks to that square outside. Routes between these areas and the
+rest of the world use the mapped bazaar entrance or catapult.
 
 The game doesn't name an area at its entrance on the outworld (it is only "the entrance to
 something special"), so a new area is named after its first room until you rename it (`zmap
@@ -175,6 +192,8 @@ Shop places are named `shop-<route>-general`, `shop-<route>-armour` and
   use `zsell source add <id> disc`.
 - Stand at your bank or booth and use `zsell bank here` or `zsell booth here` (a named `goto`
   place also works). Choose `zsell deposit bank`, `booth` or `none` (the default).
+  You can also set a slot directly with `zsell booth 12 8`. A booth trip checks the coordinates
+  and waits for a room reading showing an occupied booth before handling gold there.
   `zsell reserve 8000` keeps that amount of cash when depositing; `zsell reserve 0` deposits all.
   Deposits use your cash and collect coins from configured bags and discs. Coins held by
   a servant or mule must be retrieved manually before the deposit.
