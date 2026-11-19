@@ -57,7 +57,7 @@ mapping area, and terrain for the 3D diorama ground.
 | indoor | description, then `There are N obvious exits: ...` | mapped |
 | city | 15-column street map (you are `X`) beside the description | mapped; the map is shown in the room card |
 | wild | terrain map (you are `@`) beside the description | not mapped; the terrain map is shown in the room card |
-| Corn Fields and Savannah | terrain beside the room description (you are `*`) | shown on built-in coordinate grids |
+| Corn Fields, Savannah and Enfall Brownie Fields | terrain beside the room description (you are `*`) | shown on built-in coordinate grids |
 | Castle Area | a window onto roads and castle plots (you are `*`) | shown on a coordinate grid |
 | bazaar | a window onto the shopping booths (you are `*`) | shown on a built-in coordinate grid |
 
@@ -83,11 +83,41 @@ the exact coordinate. Private castle interiors still show the castle details.
 `goto castlearea 25 23` walks to that square outside. Routes between these areas and the
 rest of the world use the mapped bazaar entrance or catapult.
 
-Corn Fields and Savannah show their full terrain on your first visit. Coordinates start at
+Corn Fields, Savannah and Enfall Brownie Fields show their full terrain on your first visit. Coordinates start at
 the upper left. At the Bob Farm, south takes you into Corn Fields at `15, 2`. In Savannah,
 `path` brings you in from the outworld at `5, 3`, and `out` takes you back. Use
 `goto cornfields 15 2` or `goto savannah 5 3` to walk to those entrances.
 If several squares look alike, the marker appears when movement, `look`, or `map` locates you.
+In Enfall, enter from the outworld with `field`, then go east and south to reach the grid at
+`1, 1`. From there, north returns to the field edge. Use `goto enfall 8 8` for the hillock.
+
+Darkwater, Bog Imps, Boy's Desert, Valley of Mystery, Terray, Spider Forest, Ravenloft,
+Rift and the Ancient Graveyard also have terrain maps. At Darkwater, `enter` leads from the
+outworld square `85,3` to the road at `12,1`. Try `goto darkwater 12 4` to follow it south.
+The southern passage at `12,15` leads to the gate. The guarded valley beyond it and the
+mountain lake reached through the caves each have their own terrain map. At `12,14` in
+the valley, `upland` climbs to `4,8` in the Uplands. Use `valley` there to descend.
+The walker waits for you to land. If you slip back to the start, it stops there.
+At the northern end of the guarded valley, `out` at `11,1` takes you directly to
+outworld `85,6`. This exit is one-way.
+At `5,20` in the guarded valley, `tunnel` leads to the jungle at `28,6`.
+Use `tunnel` there to return. ZombieUI requests a look when the crawl ends
+so the map can confirm where you landed.
+At `14,23` in the valley, `descent` drops you onto the dungeon's stone path at `4,9`.
+To return, use `volcano` at dungeon square `28,11`. The eruption lands you at `10,11` in the valley.
+In Valley of Mystery, `path` takes you between the ordinary approach room and grid square
+`17,10`. Some grids have only local routes. Walking between areas requires a known crossing.
+In Druid Forest, `forest` at outworld square `263,97` brings you to the altar at `11,10`.
+You can walk across it, return with `goto druidforest 11 10`, or use `leave` there.
+In the Ancient Graveyard, `enter` at outworld square `434,131` brings you to `23,17`.
+South from that gate takes you back. Ravenloft has a one-way entrance. To reach Maruschka
+from the terrain, use `goto ravenloft 7 7`, walk east, then `enter`. Her `mists` command
+takes you to the Great Temple. Once you've made that trip, walks and runs can use it.
+
+Eldoria and its six interior maps use the game's `@` marker. For example, `goto eldoria 3 3`
+walks to the portal in the main realm. At outworld square `77,130`, `enter portal` takes
+you there. The same command at `3,3` takes you back. Each area uses its own terrain colours. As you look
+around, ZombieUI reads the colours your game displays and remembers them in your profile.
 
 The game doesn't name an area at its entrance on the outworld (it is only "the entrance to
 something special"), so a new area is named after its first room until you rename it (`zmap
@@ -100,6 +130,18 @@ one to walk there), `zmap entrance all` every one, and `zmap entrance next` walk
 The entrances and their names come from the players' own
 [outworld map](https://zommap.github.io/) and the r/zombiemud wiki, checked against the routes
 the wiki gives.
+
+With mapping on (`zmap on`) and the game in verbose mode, press **`zmap next`** to explore.
+Each press walks to a room with unexplored exits or tries one exit where you stand. A closed
+door can be opened as part of that move. If a guard, lock or puzzle stops you, the next press
+tries another path. `zmap next blocked` shows the game's reasons. After dealing with an
+obstacle, use `zmap next retry` to include deferred paths again.
+
+Once local exits are exhausted, the same command can walk across the outworld to an unvisited
+entrance or a previously mapped area with unfinished exits. Press again on the entrance square
+to enter by a listed command. To choose a particular area, use **`goto entrance <name>`**,
+for example `goto entrance Castle Greenlight`. Hidden entrances and puzzles may need a command
+you supply yourself.
 
 Following a party's leader (`party follow`), the game walks you and shows each room in brief,
 whatever you have set. ZombieUI reads the way you went from who left before you ("Taosy leaves
