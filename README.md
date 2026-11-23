@@ -164,6 +164,12 @@ laid out again between its two ends, bowing out to the side it was walked on. `z
 <to>` does the same for rooms already mapped. Look-alike streets are told apart by their side
 maps, which each city room keeps.
 
+In a city whose plan ZombieUI knows (ZombieCity, Acir's Spire and Ravenkall, or any city after you type `map`
+there once) every street is placed on its square of the game's own city map, and recognised by
+it, so streets that read alike are never confused and a new street never lands off the grid.
+On its streets the map panel shows that city map with you on it; the `map` button above it switches
+to the mapped rooms and back.
+
 ## Runs
 
 A run is a round of stops: map rooms or outworld squares, each with what to kill there and how
@@ -265,6 +271,8 @@ Shop places are named `shop-<route>-general`, `shop-<route>-armour` and
   shortest walk that avoids mountains, walls and water deeper than wading, and in through a gate
   when the place is a mapped room. `goto <place> w` may cross deep water. Gates learn their
   outworld squares as you walk through them.
+- From the continent Ravenkall is on, the way back to ZombieCity can go through the empty castle
+  north of Ravenkall: `enter`, then its `cs` takes you to Central Square, with no ride or deep water.
 - `(goto castle)` in a place's commands or a run's path is routed from wherever the path has
   got to.
 - The way goes out a command at a time (`20 w` is one), the next when the rooms of the one
