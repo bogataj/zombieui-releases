@@ -343,9 +343,9 @@ Ordinary `(open gate)` allows a reply without moving. `zstop` stops the walk.
 
 ### Castle chests
 
-`zchest` handles every chest, safe or cabinet in the room at once, one command at a time,
-each waiting for the game's answer. It goes by the game's numbers (`chest 1`, `chest 2`...),
-so it counts them first.
+`zchest` handles every chest, safe or cabinet in the room at once. It goes by the game's
+numbers (`chest 1`, `chest 2`...), so it counts them first, then sends the commands for all of
+them together and reads the answers as they come, so even hundreds of chests take moments.
 
 - `zchest` lists them, open or closed, with what each holds (wooden chest 10 items,
   reinforced chest 20, safe 30, cabinet 40 scrolls).
@@ -359,7 +359,7 @@ so it counts them first.
   `get all` it looks and stops if any other chest in the room is open.
 - `zchest label <text>` labels them (opening and closing them for it); `food#` numbers them
   `food1`, `food2`...
-- Which ones: nothing for all of them, numbers (`zchest open 2`, `zchest close 1-3`), a label
+- Which ones: nothing for all of them (with more than 20 here, say `all`: `zchest open all`), numbers (`zchest open 2`, `zchest close 1-3`), a label
   (`zchest get mastery`), or both. `cabinets` or `safes` first for those
   (`zchest open cabinets`). `zstop` stops it, and so does typing another command.
 - Inside a castle, the map's panel lists the room's chests: a click on a labelled one opens or
