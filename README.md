@@ -341,6 +341,32 @@ Ordinary `(open gate)` allows a reply without moving. `zstop` stops the walk.
   Both are kept up to date as you play.
 - Famous castles get a name of their own with `goto add`.
 
+### Castle chests
+
+`zchest` handles every chest, safe or cabinet in the room at once, one command at a time,
+each waiting for the game's answer. It goes by the game's numbers (`chest 1`, `chest 2`...),
+so it counts them first.
+
+- `zchest` lists them, open or closed, with what each holds (wooden chest 10 items,
+  reinforced chest 20, safe 30, cabinet 40 scrolls).
+- `zchest open` unlocks and opens them; `zchest close` closes them, which also locks them.
+  Only whoever closed a chest last can unlock it: ZombieUI stops there and never guesses a code.
+- `zchest get` gets all from each open one.
+- `zchest stash` puts all your things away: it opens the first chest, puts all in, and closes
+  it. What didn't fit falls onto the floor; ZombieUI picks it up again with `get all` and goes
+  on to the next chest. Kept items (`keep`) stay with you. An open chest can be picked up
+  by `get all` too, so stash closes the chests it fills later first, and before each
+  `get all` it looks and stops if any other chest in the room is open.
+- `zchest label <text>` labels them (opening and closing them for it); `food#` numbers them
+  `food1`, `food2`...
+- Which ones: nothing for all of them, numbers (`zchest open 2`, `zchest close 1-3`), a label
+  (`zchest get mastery`), or both. `cabinets` or `safes` first for those
+  (`zchest open cabinets`). `zstop` stops it, and so does typing another command.
+- Inside a castle, the map's panel lists the room's chests: a click on a labelled one opens or
+  closes it, and the line under them opens, closes, empties or stashes all of them.
+- Want short words of your own, like `gall` for `zchest get`? Make a Mudlet alias with the
+  pattern `^gall$` and the script `expandAlias("zchest get")`.
+
 ## Loadouts
 
 A loadout is how your reinc fights: what opens a fight, what you fight with, which buffs you keep
