@@ -362,8 +362,6 @@ them together and reads the answers as they come, so even hundreds of chests tak
 - Which ones: nothing for all of them (with more than 20 here, say `all`: `zchest open all`), numbers (`zchest open 2`, `zchest close 1-3`), a label
   (`zchest get mastery`), or both. `cabinets` or `safes` first for those
   (`zchest open cabinets`). `zstop` stops it, and so does typing another command.
-- Inside a castle, the map's panel lists the room's chests: a click on a labelled one opens or
-  closes it, and the line under them opens, closes, empties or stashes all of them.
 - Want short words of your own, like `gall` for `zchest get`? Make a Mudlet alias with the
   pattern `^gall$` and the script `expandAlias("zchest get")`.
 
