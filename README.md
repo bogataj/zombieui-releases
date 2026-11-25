@@ -446,6 +446,10 @@ suggest from what you know.
   never of that one. `zwarn after 4` gives a second warning when the attack is about to land,
   `zwarn after fireball 9` for one spell, skill or monster. With Loc Ecsuram up the warning
   carries [absence] and [reaction] links. Nothing is ever sent for you.
+- The status bar says when you are stunned, poisoned (until it is cured) or scarred, and how
+  many scars you have.
+- Mastery points: a line says each one as it comes, with how many this reboot and how long
+  since the last. `zmastery` lists them, `zmastery party` tells your party.
 - The PARTY card follows the party's own messages at once, also while you are idle: who left,
   who joined, who leads now, with the places moved as the game moves them. A member who died
   has a ghost by their name, a link-dead one an x.
@@ -477,6 +481,25 @@ multiples of five, such as `train all skills 75`, to stop at or below that perce
 The commands spend experience and gold. List again after moving or spending so the percentages are
 current. You can skip individual abilities in `user.lua`, for example
 `zui.training.skip.skills["first aid"] = true` or `zui.training.skip.spells["light"] = true`.
+`train stats` trains each of the six stats once.
+
+## Exploring
+
+- `xa <thing>` tries every verb that finds what a thing does: look at, search, push, pull,
+  turn, press, touch, open, read, dig and more. None that moves you or attacks.
+- `sea` searches the floor, ceiling and walls; `sea walls` looks at and searches every wall;
+  `sea canta` searches the spots of Canta.
+- `open doors` opens the doors of all eight directions. `lbox 5` opens boxes 1 to 5 and takes
+  what is in them. `loop get all from chest 4` sends it for chest 1 to 4.
+- When you look at a weapon or item, the game's wording gets its number: weapon familiarity
+  (10 of 32), how strongly an item glows (6 of 8), a shard's power (power 13).
+- `zfood` lists what each bazaar food raises, `zconc` what each concoction symbol gives.
+  `de str` drinks an elixir of strength, `aps fire` applies and `smear fire` smears a salve of
+  fire resistance (`smear paste`: the paste of elemental preservation).
+- `znotice` lists notices for events and timers, each off until you switch it on: arena,
+  puzzle, Hour of mercy, Santa's and the Halloween presents, a dimensional gate about to
+  close, your protection ring charged again, your food buff down, your coin ready.
+- `zhl add <text>` highlights every line with your text in it; `zhl` lists them.
 
 ## When you die
 
