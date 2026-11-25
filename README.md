@@ -236,7 +236,8 @@ Shop places are named `shop-<route>-general`, `shop-<route>-armour` and
 
 - Inventory is enabled initially. Add every other source you use with `zsell source add bag`,
   `zsell source add disc`, `zsell source add servant` or `zsell source add mule`.
-  Custom container IDs are accepted; `zsell source del bag` removes one.
+  Custom container IDs are accepted; `zsell source del bag` removes one. Items in a container
+  are sold only when it is a source: a trip from your inventory alone says so.
 - Arrows, shurikens and fragments are protected by default. `zsell protect add <item id>` adds
   your own protection; `zsell protect del <item id>` removes it. Worn equipment and existing
   keep markings are preserved. Protected objects in containers are taken into inventory and
@@ -259,7 +260,9 @@ Shop places are named `shop-<route>-general`, `shop-<route>-armour` and
   them**. Check your sources and protected IDs before the first real trip.
 - `zsell stop` pauses; `zsell resume` continues. After a reply that cannot be verified,
   inspect the visible game output: `zsell retry` explicitly repeats the command. `zsell accept`
-  acknowledges a sale or deposit already handled; protection steps cannot be skipped.
+  acknowledges a sale or deposit already handled; protection steps cannot be skipped. A sale
+  with nothing left to sell (only a prompt in reply) simply goes on. While a trip is paused,
+  `zsell` shows it and what you can do; `zsell cancel` ends it so `zsell` starts a new one.
 - At the end, `zsell return` walks back. `zsell cancel` discards the trip and leaves you where
   you are. A reload restores the trip paused and never repeats an uncertain sale or deposit.
 
@@ -388,9 +391,10 @@ suggest from what you know.
   (`zload buff ward of steel at tank`, `zload buff iron will at party`). The tank is
   the party's leader, as the game has it (it follows when the lead changes, and it is you when
   you lead or play alone, in a party of one or in none); `zload tank Kremar` names someone
-  else for that party (`zload tank none`: the leader again). A buff that stacks takes
-  a number (`zload buff shield of protection x2 at tank`), and a spell that works on yourself
-  only can't be kept on anyone else.
+  else for that party (`zload tank none`: the leader again). A buff that stacks (shield
+  of protection, barkskin, stoneskin, amorphic armour) is kept at its most, two layers; a
+  number keeps fewer (`zload buff shield of protection x1 at tank`). A spell that works on
+  yourself only can't be kept on anyone else.
 - The rebuff key casts what matters most first: greater protections, then stun protection
   (iron will and its kin), lesser protections, armour class, everything else; in each of
   those the tank first, then you, then the others. `zload buff <spell> first` (or `last`,
@@ -407,6 +411,15 @@ suggest from what you know.
   It sends only what differs, while you are at the keyboard. It is off until you turn it on;
   `zparty` shows the three states and changes what
   each sets (`zparty member autoloot own`, `zparty tank sc keep`).
+- After a kill of your own (the monster you were fighting, or others your area spell killed
+  with it), `zloot` puts the loot away and deals with the corpse: `zloot into bag` (or a
+  container's name, `mule`, `servant`, `give <name>`), `zloot corpse tin` (`eat`, `get`),
+  your own commands for each corpse (`zloot corpse add oscalp corpse`) and once after
+  (`zloot then add put all in quiver`). It runs alone and when you lead; `zloot member on`
+  also in someone else's party. A command that uses a skill or casts a spell on the corpse
+  waits until no monster is fighting you and the skill or spell you have going has ended, so
+  it never takes that one's place. It is off until `zloot on`, and sends only while
+  you are at the keyboard.
 - The PARTY card follows the party's own messages at once, also while you are idle: who left,
   who joined, who leads now, with the places moved as the game moves them. A member who died
   has a ghost by their name, a link-dead one an x.
