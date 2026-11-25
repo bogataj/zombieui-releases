@@ -429,6 +429,16 @@ suggest from what you know.
   one the keys use, and `zload copy`/`zload delete` copy or throw one away.
 - Presets of your own in `user.lua` (`zui.user.preset`) are starting points for `zload from`.
 
+## Training and study
+
+At a guild trainer, type `list skills` and then `train all skills`, or type `list spells` and then
+`study all spells`. Each ability goes up to the maximum shown by the guild. Add a target in
+multiples of five, such as `train all skills 75`, to stop at or below that percentage.
+
+The commands spend experience and gold. List again after moving or spending so the percentages are
+current. You can skip individual abilities in `user.lua`, for example
+`zui.training.skip.skills["first aid"] = true` or `zui.training.skip.spells["light"] = true`.
+
 ## When you die
 
 A ghost has no prompt and no colours, and its `look` is brief, so ZombieUI holds still until
