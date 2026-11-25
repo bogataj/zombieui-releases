@@ -234,11 +234,17 @@ selects it by default. `zsell grimhildr` selects it for one trip.
 Shop places are named `shop-<route>-general`, `shop-<route>-armour` and
 `shop-<route>-weapon`; they can also be shared with `zshare export places <names>`.
 
-- Inventory is enabled initially. Add every other source you use with `zsell source add bag`,
-  `zsell source add disc`, `zsell source add servant` or `zsell source add mule`.
-  Custom container IDs are accepted; `zsell source del bag` removes one. Items in a container
-  are sold only when it is a source: a trip from your inventory alone says so.
-- Arrows, shurikens and fragments are protected by default. `zsell protect add <item id>` adds
+- Your inventory is sold with `sell noeq`, so nothing you wear or wield is ever offered.
+  A container is emptied with `sell all from <it>`.
+- Sources are found for you when they can be shown to be there: a bag of holding when your
+  inventory lists one (a trip reads it first if you haven't typed `i` since logging in), and
+  your own floating disc, mule or dark servant when the room lists them. Add any other with
+  `zsell source add bag`, `disc`, `servant`, `mule` or a container's id; `zsell source del bag`
+  removes one, also a found one, until you add it again. Items in a container are sold only
+  when it is a source: a trip from your inventory alone says so.
+- Fragments are protected by default; arrows when your skills show you shoot a bow, and
+  shurikens when they show you throw them. `zsell preview` lists what was found and why.
+  `zsell protect add <item id>` adds
   your own protection; `zsell protect del <item id>` removes it. Worn equipment and existing
   keep markings are preserved. Protected objects in containers are taken into inventory and
   kept there; servants use `scom keep`. A mule has no keep command: it drops protected items
@@ -416,10 +422,30 @@ suggest from what you know.
   container's name, `mule`, `servant`, `give <name>`), `zloot corpse tin` (`eat`, `get`),
   your own commands for each corpse (`zloot corpse add oscalp corpse`) and once after
   (`zloot then add put all in quiver`). It runs alone and when you lead; `zloot member on`
-  also in someone else's party. A command that uses a skill or casts a spell on the corpse
+  also in someone else's party. Arrows your autoloot takes from the corpse go back to the
+  archers who fired a bow in the fight and are with you (`give all kyte arrow to kyte`, by
+  the name tag on each arrow), your own into your quiver; `zloot arrows off` leaves them.
+  A command that uses a skill or casts a spell on the corpse
   waits until no monster is fighting you and the skill or spell you have going has ended, so
   it never takes that one's place. It is off until `zloot on`, and sends only while
   you are at the keyboard.
+- Tur Loc: while Loc Ecsuram is up, the BUFFS card shows absence, reaction, harmony and
+  preserve as ready, maybe (inside the random part of the cooldown) or the time left, worked
+  out from your own skill percentages; "This is too soon." corrects it. `zturloc` shows the
+  cooldowns and how many procs came since each skill's last mastery point. When your staff
+  moves in perfect harmony and harmony is ready, a [harmony] link offers it. `zdef` uses
+  absence when it is ready, else reaction: bind it to a key. `ab`, `re`, `ha` and `pre` send
+  absence, reaction, harmony and preserve when you have the skill (a spell shortcut of the
+  same word keeps it); `zturloc reset` sets the proc counts to 0. Magus shows as an effect, and
+  `zload buff magus` keeps it filled, waiting while Loc Ecsuram is down.
+- Attack warnings (`zwarn on`): when the monster you fight starts a spell, a red line says so.
+  Everyone sees a spell start without its name; a spellblade with fleeting auguries also sees
+  names and skills, and a heal or a shield the monster casts on itself isn't warned of.
+  `zwarn all on` warns of any monster in the room, `zwarn lines on` also of NPC skills that
+  hit over several rounds, `zwarn add <text>` of your own lines, and `zwarn ignore <name>`
+  never of that one. `zwarn after 4` gives a second warning when the attack is about to land,
+  `zwarn after fireball 9` for one spell, skill or monster. With Loc Ecsuram up the warning
+  carries [absence] and [reaction] links. Nothing is ever sent for you.
 - The PARTY card follows the party's own messages at once, also while you are idle: who left,
   who joined, who leads now, with the places moved as the game moves them. A member who died
   has a ghost by their name, a link-dead one an x.
