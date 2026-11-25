@@ -107,6 +107,9 @@ At `14,23` in the valley, `descent` drops you onto the dungeon's stone path at `
 To return, use `volcano` at dungeon square `28,11`. The eruption lands you at `10,11` in the valley.
 In Valley of Mystery, `path` takes you between the ordinary approach room and grid square
 `17,10`. Some grids have only local routes. Walking between areas requires a known crossing.
+In Ironledge, north from the gate corridor brings you into the valley at `10,11`.
+Use `goto ironledge 10 11` to return to that square. The church, hospital and castle use
+Mudlet's map, and `valley` takes you back outside from their entrances.
 In Druid Forest, `forest` at outworld square `263,97` brings you to the altar at `11,10`.
 You can walk across it, return with `goto druidforest 11 10`, or use `leave` there.
 In the Ancient Graveyard, `enter` at outworld square `434,131` brings you to `23,17`.
