@@ -491,7 +491,11 @@ Mudlet's Keys stays yours: ZombieUI leaves it alone.
   SESSION card's Tales row counts this season's five heard in full since the reboot (your own
   recitals too); click it, or type `zui tales` (`zui tales all` for every season). Tales you heard
   before ZombieUI counted them: `zui tales heard factions`, or `zui tales heard all` for the season's
-  five (`zui tales unheard` takes it back).
+  five (`zui tales unheard` takes it back). To tell them as a high elf, use `recite season` for
+  the current five, or name the season with `recite horth`, `recite tauri`, `recite bors`, or
+  `recite colus`. Each tale waits for the previous one to finish. If the recital pauses while
+  you're away or need to rest, use `zui tales next` to continue. `zui tales stop` stops the
+  remaining tales.
 - **Your bless and profane sacrament:** a cleric's or paladin's bless, and a death knight's profane
   sacrament for the undead, each last until the reboot (or until you quit), and you get one of each
   every reboot. ZombieUI notes who gave it and what it gave ("You feel wiser."): the EFFECTS card
