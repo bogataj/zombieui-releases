@@ -182,7 +182,10 @@ load it), and `zrun help` shows the commands.
 
 - **numpad /** walks to the next stop, **shift+numpad /** walks back, and **ctrl** / **alt+numpad /**
   skip a stop forward or back without walking. On arriving, the stop's NPCs become your kill
-  target (`@t`, `kt`), and the RUN card counts the kills.
+  target (`@t`, `kt`), and the RUN card counts the kills. A target without a count is done when
+  none of it is left in the room: the kill target moves on to the next NPC of the stop that is
+  there, and once the room is clear one press of **numpad /** walks on. A target you picked
+  yourself stays until your next kill.
 - `zrun info` lists every stop: where, what to kill, and what your NPC knowledge says about it
   (exp, aggro, least resist, KYA). `zrun here` finds the stop you're at after a death or a
   detour, and `zrun go 3` walks to stop 3. `zrun go elmo` goes to the stop with that NPC
@@ -193,6 +196,11 @@ load it), and `zrun help` shows the commands.
   there, or kill something and the room becomes a stop with that NPC. `zrun kill orc 2`,
   `zrun note ...` and `zrun warn ...` change the stop you're at; `zrun add`, `zrun del` and
   `zrun move` change the round. `zrun save` keeps it.
+- `zrun optional captain` makes a target of the stop you're at optional: one you may leave
+  standing, like a guard whose stun is hard to handle solo. It is listed and its kills are
+  counted, but **numpad /** walks on without waiting for it, it never becomes your kill target
+  by itself, and the run's kill and exp totals leave it out. `zrun optional captain off` makes
+  it a target to kill again.
 - `zrun end default cs` chooses your usual end place. `zrun end run castle` saves a
   different choice for the loaded script; `zrun end cs` overrides it for this round.
   Use a saved place or `castle` (outside your castle), `stay` to remain at the end,
