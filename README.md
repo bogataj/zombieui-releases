@@ -1,634 +1,173 @@
 # ZombieUI
 
-A Mudlet 5.1 UI for ZombieMUD. ZombieMUD sends no GMCP, so the mapper reads rooms from plain
-game text and shows them on Mudlet's map: the flat 2D map at first, or Mudlet 5.1's 3D map
-with the **3D** button over the map (the **View** button, or `zmap view`, picks its angle, kept
-for next time).
+A complete interface for playing [ZombieMUD](http://www.zombiemud.org) in
+[Mudlet](https://www.mudlet.org) 5.1 or newer:
 
-## Installing
+- **A map that draws itself** as you walk, with ZombieCity, Ravenkall and the outworld's area
+  entrances already on it.
+- **Walking anywhere** with `goto`, across cities, the outworld, rides and castles.
+- **Runs:** rounds of monsters to kill, walked a key press at a time.
+- **Cards** for your party, buffs, stats and session, gauges for hp and sp, and chat in its own
+  windows.
+- **Loadouts** on the number pad: attack, rebuff and heal with one key.
+- Selling trips, castle chests, loot, training, spell shortcuts and much more.
 
-1. Install [Mudlet](https://www.mudlet.org) 5.1 or newer.
-2. Make a profile for ZombieMUD and open it.
-3. Download **[ZombieUI.mpackage](https://github.com/bogataj/zombieui-releases/releases/latest/download/ZombieUI.mpackage)**
-   (the newest release; earlier ones and what changed are on the
-   [releases page](https://github.com/bogataj/zombieui-releases/releases)) and drag it onto
-   Mudlet (or Toolbox > Package Manager > Install). To be told of new versions, click
-   **Watch > Custom > Releases** on the releases repository.
-4. Log in. ZombieUI welcomes you and lists the game settings it reads from; type
-   `zui setup yes` to set them. This replaces your game prompt with a data line ZombieUI reads
-   and hides; `prompt old` in the game gives you your own prompt back (and `zui prompt` sets
-   ZombieUI's again). It also removes Mudlet's
-   own generic mapper and base UI, if you have them: ZombieUI does the mapping and is the
-   interface (until then the base UI only steps aside). Mudlet's Package Manager installs
-   either again.
+ZombieUI never plays for you: everything it sends is something you asked for, while you are at
+the keyboard (see `help botting` in the game).
 
-You start with a map of ZombieCity and Ravenkall, and the outworld with its area entrances marked
-(most of them named): the rest of the map is yours to make as you go in. It is added to any map
-you have and never replaces it.
+## Install
 
-## Updating
+1. Install [Mudlet](https://www.mudlet.org) 5.1 or newer, and make a profile for ZombieMUD.
+2. Download **[ZombieUI.mpackage](https://github.com/bogataj/zombieui-releases/releases/latest/download/ZombieUI.mpackage)**
+   and drag it onto Mudlet (or Toolbox > Package Manager > Install).
+3. Log in and type **`zui setup yes`**. This sets the game settings ZombieUI reads from. Among
+   them, your prompt is replaced by a data line that ZombieUI reads and hides (`prompt old` in
+   the game gives yours back). It also removes Mudlet's own generic mapper and base UI, since
+   ZombieUI replaces them.
 
-Once a day ZombieUI asks the releases page whether there is a newer version, and if there is it
-tells you when you log in. `zui update` downloads it and installs it in place: your settings,
-map and notes are kept, and you stay logged in. Nothing is installed until you type it.
-Before replacing the package, ZombieUI checks the download and saves a recovery copy in
-`zui_data/update/rollback/ZombieUI.mpackage`. If installation fails, it reinstalls that copy.
-`zui update check` looks right away, and `zui update off` (or `on`) stops or starts the daily
-look. You can also update by hand: install the new `.mpackage` the way you installed the first
-one. If a new version ever fails to start, drag an earlier one from the
-[releases page](https://github.com/bogataj/zombieui-releases/releases) onto Mudlet.
+**Updating:** ZombieUI checks once a day for a new version and tells you when you log in.
+`zui update` installs it, and you stay logged in. Your settings, map and notes are always kept.
+If an update ever fails, it puts the previous version back.
+All versions and what changed in each are on the
+[releases page](https://github.com/bogataj/zombieui-releases/releases).
 
-## Layout
+## First steps
 
-Blocks (map, room, chat, and the party, effects, stats and session cards) sit in regions around
-the main console: columns left and right, and bands above and below. By default
-chat runs above the main console, and the right column has the map, room and party, then effects
-beside session, and stats beside the run you have loaded. The column width and text size follow
-the window size. `zui layout` shows the placement and changes it; your choices are kept in `zui_data/`.
-`zui layout undo` takes back the last change made with its commands, a reset or a preset too.
+| Type | To |
+|---|---|
+| `zui` | see every command by topic; click one for more |
+| `zmap on` | start mapping the rooms you walk into |
+| `goto cs` | walk to Central Square from anywhere |
+| `zmap next` | explore: walk to the nearest unexplored exit and try it |
+| `zload build` | set up what your number pad fights and buffs with |
+| `zrun` | list your runs, or `zrun record <name>` to make one |
 
-Right-click the map and open the **ZombieUI** menu for walk here, I am here, move to the
-mapping area, and terrain for the 3D diorama ground.
+The number pad walks (**8** north, **2** south and so on, **5** looks, **-** up and **+** down).
+A key you have set yourself in Mudlet stays yours.
 
-## How the mapper reads ZombieMUD
+## Map and exploring
 
-| Room kind | How it looks in game | What the mapper does |
-|---|---|---|
-| indoor | description, then `There are N obvious exits: ...` | mapped |
-| city | 15-column street map (you are `X`) beside the description | mapped; the map is shown in the room card |
-| wild | terrain map (you are `@`) beside the description | not mapped; the terrain map is shown in the room card |
-| Corn Fields, Savannah and Enfall Brownie Fields | terrain beside the room description (you are `*`) | shown on built-in coordinate grids |
-| Castle Area | a window onto roads and castle plots (you are `*`) | shown on a coordinate grid |
-| bazaar | a window onto the shopping booths (you are `*`) | shown on a built-in coordinate grid |
+ZombieMUD sends no map data, so ZombieUI reads every room from the game's text. With
+`zmap on`, each room you step into from a known room is added to the map. Right-click the map
+for walking there or telling the mapper where you are. The **3D** button above it switches to
+Mudlet's 3D map.
 
-Each mapped room is keyed by kind and description. Walking through an exit the map already
-knows is trusted first, so rooms with the same description still work if you walk into them.
-With mapping on (`zmap on`), a room is only added for a step from a room the map knows, or for a
-step in from a known outworld square (a new area). When the map doesn't know where you are,
-nothing is added until it finds you again; `zmap start <area>` begins a new area by hand.
+- **Exploring:** `zmap next` walks to the nearest exit you haven't tried and tries it. It
+  opens closed doors on the way. If a guard or lock stops you, the next press tries elsewhere.
+  `zmap next blocked` shows what stopped you, and `zmap next retry` tries those again.
+- **New areas** are named after their outworld entrance. `zmap entrance` lists the entrances
+  you haven't mapped yet, and `zmap entrance next` walks to the nearest.
+- **Cities** (ZombieCity, Ravenkall, Acir's Spire, and any other once you type `map` there) are
+  laid out on the game's own city map, which the map panel shows while you are on a street.
+- **Terrain grids:** areas that show a terrain window around you (the bazaar, the Castle Area,
+  Corn Fields, Savannah, Darkwater, Dwarf Valley, Eldoria and more) are drawn as a grid, and
+  `goto savannah 5 3` walks to a square.
+- **Rooms that change:** some areas, like ZombieCity's graveyard, describe a room differently
+  on every visit. They are mapped by position. `zmap vary on` marks another such area.
 
-The ZombieCity bazaar opens on a 20-by-20 grid. The entrance is at `1, 7`. A west step from
-that cell takes you back to the alley. A booth is `o`, a slot last seen empty is `.`, and
-`?` means the slot has yet to be seen. Each room reading refreshes the booths it shows.
-Previously mapped booth rooms are kept in the
-**Bazaar (legacy map)** area, with a backup of their original layout in `zui_data/`.
-Use `goto bazaar 12 8` to walk to a slot by its coordinates, or `goto add mybooth` while
-standing there to save it by name.
+More: `zui help map`.
 
-The Castle Area uses the catapult's coordinates. Its southern exit is at `8, 1`. The grid
-shows all roads and plots from the start. A plot is `o` until the game shows its status.
-Vacant (`s`), reserved (`#`), and built (`c`) are the last states seen at those coordinates.
-`look` or `map` refreshes the surrounding plots. After `shoot home`, `la sign` can place your marker at
-the exact coordinate. Private castle interiors still show the castle details.
-`goto castlearea 25 23` walks to that square outside. Routes between these areas and the
-rest of the world use the mapped bazaar entrance or catapult.
+## Walking and places
 
-Corn Fields, Savannah and Enfall Brownie Fields show their full terrain on your first visit. Coordinates start at
-the upper left. At the Bob Farm, south takes you into Corn Fields at `15, 2`. In Savannah,
-`path` brings you in from the outworld at `5, 3`, and `out` takes you back. Use
-`goto cornfields 15 2` or `goto savannah 5 3` to walk to those entrances.
-If several squares look alike, the marker appears when movement, `look`, or `map` locates you.
-In Enfall, enter from the outworld with `field`, then go east and south to reach the grid at
-`1, 1`. From there, north returns to the field edge. Use `goto enfall 8 8` for the hillock.
+- `goto <place>` walks there from anywhere: by the map, across the outworld, through gates,
+  doors and rides. `goto` lists your places, `goto add <name>` saves where you stand.
+- Long walks run in brief mode and finish with a `look`. `zstop` stops a walk.
+- `goto home` and `goto castle` lead to your castle. `goto <player>` leads to a player's
+  castle, and `goto <guild>` to a guild once you have saved it with `goto add <guild>`.
+- `goto rides` lists the transport shops you have used. Routes take a ride when walking is far
+  longer or impossible.
+- `sgoto <npc>` follows your spyglass's directions to an NPC.
+- `zwalk 3n2e` walks a path of your own while mapping.
 
-Darkwater, Bog Imps, Boy's Desert, Valley of Mystery, Terray, Spider Forest, Ravenloft,
-Rift and the Ancient Graveyard also have terrain maps. At Darkwater, `enter` leads from the
-outworld square `85,3` to the road at `12,1`. Try `goto darkwater 12 4` to follow it south.
-The southern passage at `12,15` leads to the gate. The guarded valley beyond it and the
-mountain lake reached through the caves each have their own terrain map. At `12,14` in
-the valley, `upland` climbs to `4,8` in the Uplands. Use `valley` there to descend.
-The walker waits for you to land. If you slip back to the start, it stops there.
-At the northern end of the guarded valley, `out` at `11,1` takes you directly to
-outworld `85,6`. This exit is one-way.
-At `5,20` in the guarded valley, `tunnel` leads to the jungle at `28,6`.
-Use `tunnel` there to return. ZombieUI requests a look when the crawl ends
-so the map can confirm where you landed.
-At `14,23` in the valley, `descent` drops you onto the dungeon's stone path at `4,9`.
-To return, use `volcano` at dungeon square `28,11`. The eruption lands you at `10,11` in the valley.
-In Valley of Mystery, `path` takes you between the ordinary approach room and grid square
-`17,10`. Some grids have only local routes. Walking between areas requires a known crossing.
-In Ironledge, north from the gate corridor brings you into the valley at `10,11`.
-Use `goto ironledge 10 11` to return to that square. The church, hospital and castle use
-Mudlet's map, and `valley` takes you back outside from their entrances.
-In Druid Forest, `forest` at outworld square `263,97` brings you to the altar at `11,10`.
-You can walk across it, return with `goto druidforest 11 10`, or use `leave` there.
-In the Ancient Graveyard, `enter` at outworld square `434,131` brings you to `23,17`.
-South from that gate takes you back. Ravenloft has a one-way entrance. To reach Maruschka
-from the terrain, use `goto ravenloft 7 7`, walk east, then `enter`. Her `mists` command
-takes you to the Great Temple. Once you've made that trip, walks and runs can use it.
-
-Eldoria and its six interior maps use the game's `@` marker. For example, `goto eldoria 3 3`
-walks to the portal in the main realm. At outworld square `77,130`, `enter portal` takes
-you there. The same command at `3,3` takes you back. Each area uses its own terrain colours. As you look
-around, ZombieUI reads the colours your game displays and remembers them in your profile.
-
-The game doesn't name an area at its entrance on the outworld (it is only "the entrance to
-something special"), so a new area is named after its first room until you rename it (`zmap
-rename <name>`). `zmap entrance <name>`, standing on the entrance square, names it for good: the
-area behind it takes the name now, or when it is first mapped, and the name travels with your
-outworld marks when you share the map. `zmap entrance 131,70 Uhruul` names one from anywhere (the
-numbers the outworld header shows). ZombieUI comes with the outworld's area entrances marked `?`,
-most of them named. `zmap entrance` lists the nearest ones whose area isn't on your map yet (click
-one to walk there), `zmap entrance all` every one, and `zmap entrance next` walks to the nearest.
-The entrances and their names come from the players' own
-[outworld map](https://zommap.github.io/) and the r/zombiemud wiki, checked against the routes
-the wiki gives.
-
-With mapping on (`zmap on`) and the game in verbose mode, press **`zmap next`** to explore.
-Each press walks to a room with unexplored exits or tries one exit where you stand. A closed
-door can be opened as part of that move. If a guard, lock or puzzle stops you, the next press
-tries another path. `zmap next blocked` shows the game's reasons. After dealing with an
-obstacle, use `zmap next retry` to include deferred paths again.
-
-Once local exits are exhausted, the same command can walk across the outworld to an unvisited
-entrance or a previously mapped area with unfinished exits. Press again on the entrance square
-to enter by a listed command. To choose a particular area, use **`goto entrance <name>`**,
-for example `goto entrance Castle Greenlight`. Hidden entrances and puzzles may need a command
-you supply yourself.
-
-Following a party's leader (`party follow`), the game walks you and shows each room in brief,
-whatever you have set. ZombieUI reads the way you went from who left before you ("Taosy leaves
-north."), and follows the map along the exits it has; on the outworld it steps a square on. It
-never adds a room or an exit while you are being led, with mapping on too: where the leader goes
-off your map, the map says it doesn't know where you are until you are back in a room it knows
-(`look` shows the room in full and finds you at once). A step in the dark ("It's too dark to
-see.") is followed the same way, by the exit you took; led through the dark, where nobody is
-seen leaving, the map waits until it can see again.
-
-A hidden way out of a room (`press opal`, `pull lever`) isn't taken for an exit when you just type
-it: a typed `recall` or teleport would be mapped as one. Use `zmap via press opal` instead. It
-sends the command, links the room it leads to through that command, and routes then use it like
-any other exit. A room entered by a command (`hut`, `enter`) is drawn a level up on the same
-square.
-
-A city can have more rooms on a curving street than there are squares between its ends
-(Ravenkall). When a stretch of new rooms reaches a room the map already has and doesn't fit, it is
-laid out again between its two ends, bowing out to the side it was walked on. `zmap fit <from>
-<to>` does the same for rooms already mapped. Look-alike streets are told apart by their side
-maps, which each city room keeps.
-
-In a city whose plan ZombieUI knows (ZombieCity, Acir's Spire and Ravenkall, or any city after you type `map`
-there once) every street is placed on its square of the game's own city map, and recognised by
-it, so streets that read alike are never confused and a new street never lands off the grid.
-On its streets the map panel shows that city map with you on it; the `map` button above it switches
-to the mapped rooms and back.
+More: `zui help walking`.
 
 ## Runs
 
-A run is a round of stops: map rooms or outworld squares, each with what to kill there and how
-many, and notes and warnings. The way to each stop is planned from wherever you are, as `goto`
-plans it, so you can start a run anywhere and skip stops. `zrun` lists your runs (click one to
-load it), and `zrun help` shows the commands.
+A run is a round of stops, each with the monsters to kill there. ZombieUI plans the way to each
+stop from wherever you are, but walking on and fighting stay with you.
 
-- **numpad /** walks to the next stop, **shift+numpad /** walks back, and **ctrl** / **alt+numpad /**
-  skip a stop forward or back without walking. On arriving, the stop's NPCs become your kill
-  target (`@t`, `kt`), and the RUN card counts the kills. A target without a count is done when
-  none of it is left in the room: the kill target moves on to the next NPC of the stop that is
-  there, and "Stop clear" says when the room is done. A target you picked yourself stays until
-  your next kill. **numpad /** walks on at once, even with targets still standing; `zrun confirm
-  on` makes it ask for a second press then. If an NPC known to block the way to the next stop
-  (one that has stopped you there before) is still in the room, the first press warns and the
-  second walks.
-- `zrun info` lists every stop: where, what to kill, and what your NPC knowledge says about it
-  (exp, aggro, least resist, KYA). `zrun here` finds the stop you're at after a death or a
-  detour, and `zrun go 3` walks to stop 3. `zrun go elmo` goes to the stop with that NPC
-  in the loaded run, from wherever you are. Target words and full names match without regard
-  to case; exact matches take precedence over partial names. If several stops match, it lists
-  their numbers for you to choose.
-- `zrun record <name>` writes a run down as you play: walk to each stop and press **numpad /**
-  there, or kill something and the room becomes a stop with that NPC. `zrun kill orc 2`,
-  `zrun note ...` and `zrun warn ...` change the stop you're at; `zrun add`, `zrun del` and
-  `zrun move` change the round. `zrun save` keeps it.
-- `zrun optional captain` makes a target of the stop you're at optional: one you may leave
-  standing, like a guard whose stun is hard to handle solo. It is listed and its kills are
-  counted, but **numpad /** walks on without waiting for it, it never becomes your kill target
-  by itself, and the run's kill and exp totals leave it out. `zrun optional captain off` makes
-  it a target to kill again.
-- `zrun end default cs` chooses your usual end place. `zrun end run castle` saves a
-  different choice for the loaded script; `zrun end cs` overrides it for this round.
-  Use a saved place or `castle` (outside your castle), `stay` to remain at the end,
-  or `loop` to start the round again. Use `inherit` in place of the destination to
-  remove that override. These choices belong to your character and are not shared.
-- **Next at the last stop** goes to the chosen end place. With no choice, it stays there.
-  `zrun finish` goes there immediately or retries an interrupted end walk. A finished round
-  stays finished until you select another stop, for example `zrun go 1`. A temporary end
-  choice survives reload but is cleared when you explicitly load a run.
+- **numpad /** walks to the next stop (**shift**: back, **ctrl** or **alt**: skip without
+  walking). On arrival the stop's monsters become your kill target (`kt` attacks it), and the
+  RUN card counts kills and says when the stop is clear.
+- `zrun record <name>`, then walk the round: press **numpad /** at each stop, or just kill
+  something there. `zrun save` keeps it.
+- `zrun info` lists every stop with what you know of its monsters. `zrun go 3` or
+  `zrun go orc` walks to a stop.
+- `zrun optional captain` marks a monster you may leave standing, such as one that is too hard
+  to fight solo.
+- If a guard that stopped you before stands in the way to the next stop, the first press warns
+  you. Guards that let only some races or guilds through are learned per character.
+- `zrun end castle` (or any place) chooses where the round ends.
 
-Runs are files in `<profile>/zui_data/runs/`. If a move is refused, or you end up somewhere else
-than the way expected, ZombieUI tells you and the run stays where it was. Runs never move or
-fight for you (`help botting`).
+More: `zrun help`.
 
-## Selling
+## Fighting
 
-`zsell` starts a selling trip; `zrun sell` does the same while saving the loaded run's progress.
-Your position, run stop and kill counts are saved for `zsell return`. A blocked return stops
-where you actually are and keeps the return checkpoint. Selling does not fight blockers.
-Shops are visited **armour → weapon → general** to sell heavier equipment first.
-Inventory and keep preparation run once at the armour shop. Each shop checks that your
-configured followers have arrived before selling. An optional deposit checks your cash separately.
-`mule fix_weight` runs after each sale from a mule. Your own `fix_weight` runs at the end,
-after any deposit.
+- **Loadouts** decide what the number pad casts: **\*** attacks, **shift+\*** opens a fight,
+  **.** rebuffs, **ctrl+.** heals. Build one with `zload build`. Each reinc can have several.
+- **Buffs on your party:** `zload buff iron will at tank` (or `at party`) keeps a buff up on
+  others. The PARTY card tags each one and counts down its time, and `zbuffs` shows them all.
+- **Spell shortcuts:** `iw` casts iron will, `psc goblin` psychic crush at the goblin, and about
+  340 more. `zshort` lists those your reinc has.
+- **Loot:** `zloot on` puts loot away and deals with corpses after your kills
+  (`zloot into bag`, `zloot corpse tin`). Your party's arrows go back to them.
+- **Warnings:** `zwarn on` warns when the monster you fight starts a spell.
+- **Magic words** in casts are shown as the spell's name (`zwords off` keeps the game's).
 
-The three ZombieCity shops come with the starter map. Shop positions are shared game data;
-your choice of route, containers, protected items and deposit destination belongs to your
-character. To add another set of shops or correct a position, stand in each shop and use the
-corresponding command, or append the name of a saved `goto` place:
+More: `zui help fighting` and `zui help targets`.
 
-```
-zsell shop zombiecity general
-zsell shop zombiecity armour
-zsell shop zombiecity weapon
-```
+## Selling, chests and training
 
-Use another route name, such as `grimhildr`, for a second set of shops; `zsell route grimhildr`
-selects it by default. `zsell grimhildr` selects it for one trip.
-Shop places are named `shop-<route>-general`, `shop-<route>-armour` and
-`shop-<route>-weapon`; they can also be shared with `zshare export places <names>`.
+- `zsell` sells your loot at ZombieCity's shops and walks back. `zsell preview` shows what
+  would be sent first. You choose the sources (bag, disc, mule, servant), what to protect, and
+  whether to deposit at a bank or booth. `zsell help` explains each.
+- `zchest open`, `zchest stash` and `zchest get` handle every chest in a castle room at once.
+- At a guild trainer, `list skills` and then `train all skills` (or `study all spells`) trains
+  everything to the guild's maximum.
 
-- Your inventory is sold with `sell noeq`, so nothing you wear or wield is ever offered.
-  A container is emptied with `sell all from <it>`.
-- Sources are found for you when they can be shown to be there: a bag of holding when your
-  inventory lists one (a trip reads it first if you haven't typed `i` since logging in), and
-  your own floating disc, mule or dark servant when the room lists them. Add any other with
-  `zsell source add bag`, `disc`, `servant`, `mule` or a container's id; `zsell source del bag`
-  removes one, also a found one, until you add it again. Items in a container are sold only
-  when it is a source: a trip from your inventory alone says so.
-- Fragments are protected by default; arrows when your skills show you shoot a bow, and
-  shurikens when they show you throw them. `zsell preview` lists what was found and why.
-  `zsell protect add <item id>` adds
-  your own protection; `zsell protect del <item id>` removes it. Worn equipment and existing
-  keep markings are preserved. Protected objects in containers are taken into inventory and
-  kept there; servants use `scom keep`. A mule has no keep command: it drops protected items
-  for immediate pickup and keeping before selling. These items briefly lie on the ground;
-  use inventory or a bag for items you do not want handled this way. Failed or unrecognized
-  protection replies pause the trip before selling. Keep markings are never cleared.
-- Discs, mules and servants must appear as yours in the room listing. Missing followers or
-  ambiguous selectors pause the trip after 15 seconds. Bring them to you, then `zsell resume`.
-  Following and tanking settings are left under your control. For a custom disc identifier,
-  use `zsell source add <id> disc`.
-- Stand at your bank or booth and use `zsell bank here` or `zsell booth here` (a named `goto`
-  place also works). Choose `zsell deposit bank`, `booth` or `none` (the default).
-  You can also set a slot directly with `zsell booth 12 8`. A booth trip checks the coordinates
-  and waits for a room reading showing an occupied booth before handling gold there.
-  `zsell reserve 8000` keeps that amount of cash when depositing; `zsell reserve 0` deposits all.
-  Deposits use your cash and collect coins from configured bags and discs. Coins held by
-  a servant or mule must be retrieved manually before the deposit.
-- `zsell config` shows settings; **`zsell preview` shows the planned commands without sending
-  them**. Check your sources and protected IDs before the first real trip.
-- `zsell stop` pauses; `zsell resume` continues. After a reply that cannot be verified,
-  inspect the visible game output: `zsell retry` explicitly repeats the command. `zsell accept`
-  acknowledges a sale or deposit already handled; protection steps cannot be skipped. A sale
-  with nothing left to sell (only a prompt in reply) simply goes on. While a trip is paused,
-  `zsell` shows it and what you can do; `zsell cancel` ends it so `zsell` starts a new one.
-- At the end, `zsell return` walks back. `zsell cancel` discards the trip and leaves you where
-  you are. A reload restores the trip paused and never repeats an uncertain sale or deposit.
+More: `zui help selling` and `zui help chests`.
 
-## Places
+## Cards and information
 
-`goto <place>` walks there from wherever you are. `goto` alone lists your places (click one to go).
+- **PARTY** follows joins, leaves and leaders as they happen, with each member's hp and sp.
+- **EFFECTS** shows your buffs and when they run out. **STATS** shows your score, and
+  **SESSION** this session's exp, kills, deaths, the reboot and the time of day.
+- The status bar shows when you are stunned, poisoned or scarred.
+- `zui layout` rearranges the cards, map and chat around the main window.
 
-- A place is a map room or an outworld square, with any commands to do on arriving
-  (`goto then feda (enter)(portal)9w7n`). `goto add <name>` makes the room or square you're on a
-  place, and `goto del <name>` removes one. A new player starts with `cs`, the central square.
-- The way is worked out each time. It goes by the map to a city gate, across the outworld by the
-  shortest walk that avoids mountains, walls and water deeper than wading, and in through a gate
-  when the place is a mapped room. `goto <place> w` may cross deep water. Gates learn their
-  outworld squares as you walk through them.
-- From the continent Ravenkall is on, the way back to ZombieCity can go through the empty castle
-  north of Ravenkall: `enter`, then its `cs` takes you to Central Square, with no ride or deep water.
-- `(goto castle)` in a place's commands or a run's path is routed from wherever the path has
-  got to.
-- The way goes out a command at a time (`20 w` is one), the next when the rooms of the one
-  before are in: a refused move ends the walk there, with the game's reason, and nothing more
-  is sent. `zstop` stops a walk; what the command already sent still has to do, it does.
-- A walk of 10 moves or more is made in the game's brief mode, which is smoother over long
-  distances and on the outworld: ZombieUI sends `brief` as the walk starts, and on arriving
-  `brief` again and a `look`, so the room you end in shows in full. That goes for `goto`
-  and for the way to a run's next stop. If you play in brief mode yourself, nothing is
-  switched. `goto brief off` turns it off, `goto brief on` on again, and `goto brief 25` sets
-  from how many moves.
-- `sgoto <npc>` asks your spyglass (`find <npc>`) and walks the directions it gives. Numpad `/`
-  with no run loaded does that for your kill target.
+More: `zui help you`.
 
-They are kept in `<profile>/zui_data/places.json`.
+## Exploring helpers
 
-`zwalk <path>` follows directions you supply, for example `zwalk 3n(open gate)2e`.
-Use `h/j/k/l` for northwest/northeast/southwest/southeast. Start at a known map position
-in verbose mode: this walk keeps full room descriptions so new rooms can be mapped.
-Write `(!enter)` when a game command must lead to a room; the walk stops if it does not.
-Ordinary `(open gate)` allows a reply without moving. `zstop` stops the walk.
+- `xa <thing>` tries every way of examining something (look, search, push, pull, turn...).
+- `sea` searches the room, and `open doors` opens doors in all directions.
+- `znotice` lists optional notices (arena, puzzles, gates, timers), and `zhl add <text>`
+  highlights lines.
 
-### Rides and guilds
-
-- **Rides** are the transport shops ("buy transport to ravenkall"), the walking player's way
-  between landmasses: they aren't joined without deep water. A ride is learned the first time
-  you buy it; `goto rides` lists them.
-  - **A ride that lands in a room** (an area like Ravenkall) always lands there, and becomes an
-    exit on the map.
-  - **A ride that lands on the outworld** lands on a random square. `goto` walks to the shop,
-    rides, and plans the rest from where you land.
-  - Routes take a ride only when walking can't get there or is much longer; a ride counts like
-    40 moves.
-- **Guilds:** `goto <guild>` walks to a guild (`goto psionicist`, `goto psionicists`). Most
-  guild halls aren't known to ZombieUI in advance, so each is a place you add once at its hall
-  with `goto add psionicist`. `goto guilds` shows which are known. Short names (psi, sorc,
-  navi, necro) work too.
-
-### Castles
-
-- `goto home` walks into your castle in the castle area: to the catapult at the area's
-  entrance, `shoot home`, `enter`, and ends in the castle's first room. `goto castle` walks to
-  your outworld castle's square and stops outside, as `goto <player>` does for that player's
-  outworld castle. `goto castles` lists the castle owners known.
-- Living in someone else's castle, as a co-ruler or a guest, or with only one kind of castle?
-  Say where home is, for the character you're playing:
-  - `goto home is 25 23`: the castle at 25 23 in the castle area (the numbers its owner shoots
-    the catapult with).
-  - `goto home is <player>`: into that player's outworld castle. `goto castle is <player>`
-    makes `goto castle` walk to that castle's square.
-  - `goto home is castle`: into the castle `goto castle` goes to.
-  - `goto home is own` and `goto castle is own`: your own castle again.
-  - `goto add home` makes the room or square you're on home, like any place.
-- `goto then home 2u n` adds a path of your own from the first room further in.
-- Castles are not put on the map: their rooms are their owner's own, and a map can be shared.
-  Inside one, the map's panel says so instead of asking where you are, with what is known of
-  it: an outworld castle's name and owner ("The Castle of Astral forest", "Earendil's
-  castle", or that it is yours), a castle-area castle by the catapult's coordinates, and
-  whether you rule there. If you log in inside a numbered castle room, the panel shows
-  that room number and keeps both maps hidden. A fresh connection clears your previous position.
-  From a castle's first room, `goto <place>` leaves by its `cs` exit and goes on from Central
-  Square. Deeper inside, walk back to the first room before you `goto`.
-- The catapult's room has to be on your map: walk into it once with `zmap on`.
-- Owners come from `finger <player>` ("The Lord of the outworld Castle 'Astral forest'.").
-  Castle squares come from passing them on the outworld ("The Castle of Astral forest").
-  Both are kept up to date as you play.
-- Famous castles get a name of their own with `goto add`.
-
-### Castle chests
-
-`zchest` handles every chest, safe or cabinet in the room at once. It goes by the game's
-numbers (`chest 1`, `chest 2`...), so it counts them first, then sends the commands for all of
-them together and reads the answers as they come, so even hundreds of chests take moments.
-
-- `zchest` lists them, open or closed, with what each holds (wooden chest 10 items,
-  reinforced chest 20, safe 30, cabinet 40 scrolls).
-- `zchest open` unlocks and opens them; `zchest close` closes them, which also locks them.
-  Only whoever closed a chest last can unlock it: ZombieUI stops there and never guesses a code.
-- `zchest get` gets all from each open one.
-- `zchest stash` puts all your things away: it opens the first chest, puts all in, and closes
-  it. What didn't fit falls onto the floor; ZombieUI picks it up again with `get all` and goes
-  on to the next chest. Kept items (`keep`) stay with you. An open chest can be picked up
-  by `get all` too, so stash closes the chests it fills later first, and before each
-  `get all` it looks and stops if any other chest in the room is open.
-- `zchest label <text>` labels them (opening and closing them for it); `food#` numbers them
-  `food1`, `food2`...
-- Which ones: nothing for all of them (with more than 20 here, say `all`: `zchest open all`), numbers (`zchest open 2`, `zchest close 1-3`), a label
-  (`zchest get mastery`), or both. `cabinets` or `safes` first for those
-  (`zchest open cabinets`). `zstop` stops it, and so does typing another command.
-- Want short words of your own, like `gall` for `zchest get`? Make a Mudlet alias with the
-  pattern `^gall$` and the script `expandAlias("zchest get")`.
-
-## Loadouts
-
-A loadout is how your reinc fights: what opens a fight, what you fight with, which buffs you keep
-up and what you heal with. The number pad sends it (below). ZombieUI never makes one for you:
-when a reinc has none, it says so once its spells and skills are read, with what it would
-suggest from what you know.
-
-- `zload build` walks you through it a step at a time: opener, follow-up, buffs, heal. Each step
-  lists the spells and skills you know for it, best trained first, with ZombieUI's suggestions
-  starred. Click to pick or drop one. Nothing is saved until the last step.
-- `zload suggested` takes the suggestions as they are. `zload` shows the loadout and how to
-  change one thing at a time (`zload buff iron will`, `zload heal cure serious wounds`...).
-- The buffs a loadout keeps up show on the cards when they are down: your own on the EFFECTS
-  card, and one you keep on a party member (`zload buff force shield at Kremar`) as a red tag
-  on their row of the PARTY card, green once it is up. The rebuff key casts the next one that
-  is down. One kept on someone who isn't in your party now is left alone until they are.
-- Keeping a party buffed: a buff can be kept `at tank` or `at party` instead of on one name
-  (`zload buff ward of steel at tank`, `zload buff iron will at party`). The tank is
-  the party's leader, as the game has it (it follows when the lead changes, and it is you when
-  you lead or play alone, in a party of one or in none); `zload tank Kremar` names someone
-  else for that party (`zload tank none`: the leader again). A buff that stacks (shield
-  of protection, barkskin, stoneskin, amorphic armour) is kept at its most, two layers; a
-  number keeps fewer (`zload buff shield of protection x1 at tank`). A spell that works on
-  yourself only can't be kept on anyone else.
-- The rebuff key casts what matters most first: greater protections, then stun protection
-  (iron will and its kin), lesser protections, armour class, everything else; in each of
-  those the tank first, then you, then the others. `zload buff <spell> first` (or `last`,
-  `normal`) moves one buff out of that order. Someone who isn't in the room, or is
-  link-dead, is skipped.
-- `zload try very quick` has the key cast every buff that way (`zload buff <spell> try quick`
-  for one; `try none` for none). A lesser and a greater protection against the same damage
-  don't go on one person together: the one the game would refuse shows as covered.
-- Short score and autoloot around a party: `zparty auto on` applies them now and after your
-  party create, join, leave or leader commands. Leading one (or making it): `sc party`, so the others see your hp
-  and sp, and `set autoloot own`. A member of someone else's: `sc on` and `set autoloot off`.
-  On your own again: `sc on` and `set autoloot own`. Announcements caused by other players
-  update the displayed role without sending settings; use `zparty auto on` to apply them.
-  It sends only what differs, while you are at the keyboard. It is off until you turn it on;
-  `zparty` shows the three states and changes what
-  each sets (`zparty member autoloot own`, `zparty tank sc keep`).
-- After a kill of your own (the monster you were fighting, or others your area spell killed
-  with it), `zloot` puts the loot away and deals with the corpse: `zloot into bag` (or a
-  container's name, `mule`, `servant`, `give <name>`), `zloot corpse tin` (`eat`, `get`),
-  your own commands for each corpse (`zloot corpse add oscalp corpse`) and once after
-  (`zloot then add put all in quiver`). It runs alone and when you lead; `zloot member on`
-  also in someone else's party. Arrows your autoloot takes from the corpse go back to the
-  archers who fired a bow in the fight and are with you (`give all kyte arrow to kyte`, by
-  the name tag on each arrow), your own into your quiver; `zloot arrows off` leaves them.
-  A command that uses a skill or casts a spell on the corpse
-  waits until no monster is fighting you and the skill or spell you have going has ended, so
-  it never takes that one's place. It is off until `zloot on`, and sends only while
-  you are at the keyboard.
-- Tur Loc: while Loc Ecsuram is up, the BUFFS card shows absence, reaction, harmony and
-  preserve as ready, maybe (inside the random part of the cooldown) or the time left, worked
-  out from your own skill percentages; "This is too soon." corrects it. `zturloc` shows the
-  cooldowns and how many procs came since each skill's last mastery point. When your staff
-  moves in perfect harmony and harmony is ready, a [harmony] link offers it. `zdef` uses
-  absence when it is ready, else reaction: bind it to a key. `ab`, `re`, `ha` and `pre` send
-  absence, reaction, harmony and preserve when you have the skill (a spell shortcut of the
-  same word keeps it); `zturloc reset` sets the proc counts to 0. Magus shows as an effect, and
-  `zload buff magus` keeps it filled, waiting while Loc Ecsuram is down.
-- Attack warnings (`zwarn on`): when the monster you fight starts a spell, a red line says so.
-  Everyone sees a spell start without its name; a spellblade with fleeting auguries also sees
-  names and skills, and a heal or a shield the monster casts on itself isn't warned of.
-  `zwarn all on` warns of any monster in the room, `zwarn lines on` also of NPC skills that
-  hit over several rounds, `zwarn add <text>` of your own lines, and `zwarn ignore <name>`
-  never of that one. `zwarn after 4` gives a second warning when the attack is about to land,
-  `zwarn after fireball 9` for one spell, skill or monster. With Loc Ecsuram up the warning
-  carries [absence] and [reaction] links. Nothing is ever sent for you.
-- The status bar says when you are stunned, poisoned (until it is cured) or scarred, and how
-  many scars you have.
-- Mastery points: a line says each one as it comes, with how many this reboot and how long
-  since the last. `zmastery` lists them, `zmastery party` tells your party.
-- The PARTY card follows the party's own messages at once, also while you are idle: who left,
-  who joined, who leads now, with the places moved as the game moves them. A member who died
-  has a ghost by their name, a link-dead one an x.
-- `zbuffs` shows it all at a glance: every buff you keep on the party, member by member, how
-  long each has left, which one the key casts next, and what each time is based on. A tag
-  on the PARTY card counts down through its last two minutes, and a line tells you when a
-  buff goes due.
-- Nobody tells you when a buff on someone else ends, so ZombieUI times it: it measures how
-  long your own casts last on you (from the game's `buffs` list, and only where a buff ran
-  out by itself) and gives a cast on a party member the same: what it measured this session,
-  else what it measured last time, else ten minutes. The tag turns amber in the last minute and red when the
-  time is up; `zload` shows the time each has left. What the game does say wins over the
-  clock: their `buffs report` and "is already surrounded by...". (A death doesn't end a
-  buff: it is on them again when they are back, with the time it had.)
-- A party member's tags come from what you see cast on them, and from their `buffs report`,
-  whether they say it in the room, tell it to you or send it to the party (`buffs report
-  party`): the buffs it names are up, and a timed buff it no longer names is taken off. A
-  report from someone outside your party changes nothing.
-- A reinc can have several: `zload build party` makes another, `zload use main` switches which
-  one the keys use, and `zload copy`/`zload delete` copy or throw one away.
-- Presets of your own in `user.lua` (`zui.user.preset`) are starting points for `zload from`.
-
-## Training and study
-
-At a guild trainer, type `list skills` and then `train all skills`, or type `list spells` and then
-`study all spells`. Each ability goes up to the maximum shown by the guild. Add a target in
-multiples of five, such as `train all skills 75`, to stop at or below that percentage.
-
-The commands spend experience and gold. List again after moving or spending so the percentages are
-current. You can skip individual abilities in `user.lua`, for example
-`zui.training.skip.skills["first aid"] = true` or `zui.training.skip.spells["light"] = true`.
-`train stats` trains each of the six stats once.
-
-## Exploring
-
-- `xa <thing>` tries every verb that finds what a thing does: look at, search, push, pull,
-  turn, press, touch, open, read, dig and more. None that moves you or attacks.
-- `sea` searches the floor, ceiling and walls; `sea walls` looks at and searches every wall;
-  `sea canta` searches the spots of Canta.
-- `open doors` opens the doors of all eight directions. `lbox 5` opens boxes 1 to 5 and takes
-  what is in them. `loop get all from chest 4` sends it for chest 1 to 4.
-- When you look at a weapon or item, the game's wording gets its number: weapon familiarity
-  (10 of 32), how strongly an item glows (6 of 8), a shard's power (power 13).
-- `zfood` lists what each bazaar food raises, `zconc` what each concoction symbol gives.
-  `de str` drinks an elixir of strength, `aps fire` applies and `smear fire` smears a salve of
-  fire resistance (`smear paste`: the paste of elemental preservation).
-- `znotice` lists notices for events and timers, each off until you switch it on: arena,
-  puzzle, Hour of mercy, Santa's and the Halloween presents, a dimensional gate about to
-  close, your protection ring charged again, your food buff down, your coin ready.
-- `zhl add <text>` highlights every line with your text in it; `zhl` lists them.
+More: `zui help exploring`.
 
 ## When you die
 
-A ghost has no prompt and no colours, and its `look` is brief, so ZombieUI holds still until
-you are back: it sends nothing for you, the map keeps your place and makes no rooms, the
-loadout keys do nothing, and the gauges and cards say you are dead instead of showing what was
-true before. `goto` walks a ghost on foot, over water too (ghosts walk on it), so every place
-is a walk away: to Hubertus in Uhruul or Emlar in Ravenkall,
-or ask whether a player who knows the spell can resurrect you (praying at the church altar can
-cost a level). ZombieUI sees you alive again at your first prompt (if it ever misses it, `zui
-alive` tells it). The SESSION card counts your deaths, who killed you and the exp it cost.
-
-## Keys
-
-The number pad walks: **7 8 9 / 4 6 / 1 2 3** are nw, n, ne, w, e, sw, s and se, **5** is
-`look`, **-** goes up and **+** down, and **0** is `score`. **\*** attacks with your loadout,
-**shift+\*** stops your cast and opens with your loadout's opener, **.** rebuffs, **ctrl+.**
-heals (`hl <player>` heals them), and **/** walks runs (above). A key you have set yourself in
-Mudlet's Keys stays yours: ZombieUI leaves it alone.
-
-## Words ZombieUI takes over, and what it hides
-
-- **Shortcut words** for spells and skills (`iw` casts iron will, `psc goblin` psychic crush at
-  the goblin): about 340 come with ZombieUI, and each is on only while your reinc has its spell
-  or skill. Alone, a word aims an attack at your kill target and a protection or heal at you.
-  `zshort` lists the ones on for you, `zshort all <text>` every one, and `zshort del <word>`
-  switches one off (`zshort add <word> <spell>` makes your own).
-- **Its own short commands:** `kk`, `ki`, `rb` (and `b`), `hl` (the keys above), `kt` (kill your
-  target), and `@t` anywhere in a command, which becomes your target's word. `kill <word>` goes
-  to the game as you typed it, and teaches ZombieUI the word for that NPC.
-- **Hidden lines:** the data prompt shows as a plain `>`, the game's `hp: sp:` lines are left out
-  (the gauges show them; `zui gag off` brings them back), the game's `*** KEEPALIVE MESSAGE ***`
-  (`set keepalive`) is hidden (`zui gag keepalive off` shows it again), and what ZombieUI reads on
-  its own at a login or a cast's end (score, spells, skills, buffs, party) doesn't show.
-- **Magic words:** a spell that is cast shows its magic words ("Uione utters the magic words 'vis
-  aversor'"). ZombieUI shows the spell's name in their place ("Uione utters the magic words 'shield
-  of protection'"), for your own casts and everyone else's, whatever sentence the spell is cast
-  with ("You briskly chant 'iron will'"). The name stands out in gold: `zwords color` shows other
-  colours to click, `zwords color deep_pink` takes any of Mudlet's colour names, and `zwords color
-  none` leaves the name in the colour of its line. It knows the words of some 760 spells; words it
-  doesn't know stay as they are, and so does someone merely saying the words. Only what you see
-  changes: your own triggers still get the line as the game sent it. `zwords` shows whether it is
-  on (`zwords off` and `zwords on`), `zwords list` every spell's words, and `zwords <text>` the ones
-  with the text in the words or in the spell's name (`zwords shield`). `zwords set vis aversor =
-  SoP` gives words a name of your own, or names words ZombieUI doesn't know (click an entry of the
-  list to change it); `zwords set vis aversor =` takes yours away again, and `zwords mine` lists
-  them. Yours are kept with your settings, so an update never touches them.
-- **Elf tales:** a tale's lines ("Gam says 'In the beginning there was nothing.'") show in the main
-  window as the game sends them but stay out of the Says and All feeds. ZombieUI knows each tale by
-  its words: when one ends it says which it was and whether you have now heard all of it. The
-  SESSION card's Tales row counts this season's five heard in full since the reboot (your own
-  recitals too); click it, or type `zui tales` (`zui tales all` for every season). Tales you heard
-  before ZombieUI counted them: `zui tales heard factions`, or `zui tales heard all` for the season's
-  five (`zui tales unheard` takes it back). To tell them as a high elf, use `recite season` for
-  the current five, or name the season with `recite horth`, `recite tauri`, `recite bors`, or
-  `recite colus`. Each tale waits for the previous one to finish. If the recital pauses while
-  you're away or need to rest, use `zui tales next` to continue. `zui tales stop` stops the
-  remaining tales.
-- **Your bless and profane sacrament:** a cleric's or paladin's bless, and a death knight's profane
-  sacrament for the undead, each last until the reboot (or until you quit), and you get one of each
-  every reboot. ZombieUI notes who gave it and what it gave ("You feel wiser."): the EFFECTS card
-  shows `Bless WIS` or `Sacrament CON`, and the SESSION card's Bless and Sacrament rows say whether
-  you have this reboot's (red when you quit or died and it's gone). `zui bless` tells more. One from
-  before ZombieUI saw it: `zui bless wis` (any gift: `str`, `AC`, `fire`...) or `zui bless sacrament
-  con`; `zui bless none` (or `zui bless sacrament none`) takes it back.
-- **The time of day** sits on the right of the vitals bar. Until the game has confirmed the clock
-  it reads `sync`: a click walks you to ZombieCity's clocktower to look at it.
-
-## Your data
-
-Your settings, loadouts, map, NPC records, places, runs, chat history and `user.lua` live in
-`<profile>/zui_data/`, outside the package, so installing a new version never touches them. The
-starter map in the package is added to the map you have: rooms you have already stay as they
-are, and a new version's new rooms come in on its first start (`zshare undo` takes them out).
+ZombieUI holds still while you are a ghost: it sends nothing, and the map keeps your place.
+`goto` still walks you, over water too. You're seen as alive again at your first prompt
+(`zui alive` if it ever misses it).
 
 ## Sharing
 
-`zshare` passes what you have gathered to other players, as a file you send them however you
-like (ZombieUI never sends it through the game).
+`zshare export map` (or `area here`, `run <file>`, `npcs`) writes a file you can give other
+players. `zshare import <file>` shows what it would add, `zshare apply` adds it, and
+`zshare undo` takes it back. Only game facts are shared: never your notes or exp.
 
-- `zshare export area here` writes the area you're in (a city with its buildings) to
-  `<profile>/zui_data/share/`. `zshare export map` writes all your rooms, with your places,
-  rides, castles and outworld marks. `zshare export run <file>` writes a run with the rooms on
-  its way, and `zshare export npcs` what you know of NPCs (`npcs orc`, `npcs area <name>`, or
-  `zshare export area here npcs` with the area). Add `as <name>` to name the file.
-- Shared NPC knowledge is what the game told you: KYA, consider, aggro, the word it answers to,
-  where it was seen, which exits it guards. Your notes and your own least-resisted type are
-  never in a file, and neither are exp and fight times: they depend on your character.
-- `zshare import <file>` (a file in your share folder) shows what it would do and changes
-  nothing yet. Room numbers differ from player to player, so rooms are recognised by their text,
-  exits and side map, by their outworld square, and by the exits between them. A room that
-  could be one of several of yours, or whose exits disagree with your map, is left out with
-  everything only reached through it; `zshare same <file room> <your room>` says which it is.
-  `zshare show` marks the rooms on the map.
-- Places, runs and rides are moved onto your rooms. A place of yours with the same name stays
-  yours (`zshare take place <name> as <new>` takes theirs). The preview lists every command a
-  place sends on arriving, and every command an exit or a ride of the file sends on the way
-  through (`press opal`, `buy transport to ravenkall`): read them before you take someone's
-  file. Those of exits and rides go to the game as they are, never through your aliases.
-- `zshare apply` does it, `zshare undo` takes the last import back, and `zshare list` shows
-  your imports. A file from someone you imported from before is recognised at once; rooms they
-  see differently now are listed, and `zshare theirs` takes their text.
-- If an import pauses on a write error, fix the write problem and use `zshare apply` to retry.
-  After a reload, import the same file again to resume. Undo keeps places and runs you edited
-  afterwards, personal NPC notes, and sightings you recorded after importing. It also keeps
-  places and runs from older imports whose ledger cannot verify them. For an older map import
-  that lacks room identities, use `zshare undo force` only if the room numbers still match.
+More: `zui help sharing`.
 
-## Commands
+## Your data
 
-Type `zui` in Mudlet: the commands by topic (map, walking and places, targets, fighting, runs,
-sharing, you, built-in lists, ZombieUI), a line each; click one, or `zui help <topic or command>` (`zui help
-goto`), for its commands. `zmap` shows what the map knows of where you are and the map commands
-you use most; `zmap help` lists them all. ZombieMUD has its own `map` command, so the mapper uses
-`zmap`.
+Everything that is yours lives in `<profile>/zui_data/`: settings, map, places, runs,
+loadouts, NPC knowledge and your own `user.lua`. Updates never touch it. The map that comes
+with ZombieUI is added to yours, never replacing it.
 
-What ZombieUI comes with can be looked up: `zui lookup <spell or skill>` (`zui lookup force
-shield`, `zui lookup fs`) shows its type, the tag its effect shows with on the cards, its shortcut
-words, its magic words, the guilds that teach it and from what level, and whether you have it.
-`zfx tags <text>`, `zshort all <text>` and `zwords <text>` search the tags, every shortcut word
-and the magic words; `zui help lists` has the rest.
+## Help
+
+Type `zui` for every command by topic, and `zui help <topic or command>` for more
+(`zui help goto`). `zmap help`, `zrun help` and `zsell help` cover their own commands.
+ZombieMUD has its own `map` command, so the mapper's commands are `zmap`.
