@@ -59,7 +59,7 @@ Mudlet's 3D map.
   you haven't mapped yet, and `zmap entrance next` walks to the nearest.
 - **Cities** (ZombieCity, Ravenkall, Acir's Spire, and any other once you type `map` there) are
   laid out on the game's own city map, which the map panel shows while you are on a street.
-- **Terrain grids:** areas that show a terrain window around you (the bazaar, the Castle Area,
+- **Terrain grids:** areas that show a terrain window around you (ZombieCity's booths as `booth X Y`, the Castle Area,
   Corn Fields, Savannah, Darkwater, Dwarf Valley, Eldoria and more) are drawn as a grid, and
   `goto savannah 5 3` walks to a square.
 - **Rooms that change:** some areas, like ZombieCity's graveyard, describe a room differently
@@ -71,7 +71,7 @@ More: `zui help map`.
 
 - `goto <place>` walks there from anywhere: by the map, across the outworld, through gates,
   doors and rides. `goto` lists your places, `goto add <name>` saves where you stand.
-- Long walks run in brief mode and finish with a `look`. `zstop` stops a walk.
+- Long walks run in brief mode and switch back to verbose when they are over (`goto brief off` walks verbose). `zstop` stops a walk.
 - `goto home` and `goto castle` lead to your castle. `goto <player>` leads to a player's
   castle, and `goto <guild>` to a guild once you have saved it with `goto add <guild>`.
 - `goto rides` lists the transport shops you have used. Routes take a ride when walking is far
@@ -146,7 +146,7 @@ More: `zrun help`.
 - **Spell shortcuts:** `iw` casts iron will, `psc goblin` psychic crush at the goblin, and about
   340 more. `zshort` lists those your reinc has.
 - **Loot:** `zloot on` puts loot away and deals with corpses after your kills
-  (`zloot into bag`, `zloot corpse tin`). Your party's arrows go back to them.
+  (`zloot into bag`, `zloot corpse tin`, or `zloot corpse tineat` to eat the can too). Your party's arrows go back to them.
 - **Warnings:** `zwarn on` warns when the monster you fight starts a spell.
 - **Magic words** in casts are shown as the spell's name (`zwords off` keeps the game's).
 
@@ -154,7 +154,8 @@ More: `zui help fighting` and `zui help targets`.
 
 ## Selling, chests and training
 
-- `zsell` sells your loot at ZombieCity's shops and walks back. `zsell preview` shows what
+- `zsell` sells your loot at ZombieCity's shops and leaves you where it finishes; `zrun sell`
+  does the same and walks you back to your run, stopping if anything blocks the way. `zsell preview` shows what
   would be sent first. You choose the sources (bag, disc, mule, servant), what to protect, and
   whether to deposit at a bank or booth. `zsell help` explains each.
 - `zchest open`, `zchest stash` and `zchest get` handle every chest in a castle room at once.
