@@ -103,6 +103,18 @@ stop from wherever you are, but walking on and fighting stay with you.
 - If a guard that stopped you before stands in the way to the next stop, the first press warns
   you. Guards that let only some races or guilds through are learned per character.
 - `zrun end castle` (or any place) chooses where the round ends.
+- To grow a run, load it and type `zrun extend`. Then play on as when recording: **numpad /**
+  makes the room you're in a stop, and what you kill is added to it. `zrun extend off` ends it.
+- Change a stop from anywhere by its number: `zrun 14 note rest here`, `zrun 14 kill orc 2`.
+  `zrun add bank after 3` adds a stop at a place, room number or outworld square.
+- `zrun name`, `zrun notes`, `zrun copy <new>` (a variant to change) and `zrun rename <new>`.
+  `zrun undo` takes back the last change (this session).
+- `zrun optimize` prefers stop orders that encounter fewer known blocking guards, then fewer
+  moves. Put a guard on the required kill list at its room to clear the way later in the round.
+  `zrun optimize apply` takes the suggested order.
+- Arriving at a stop says what its monsters do (stuns, summons...). On the way to a stop you
+  cleared not long ago, you're told when, and how long its monsters took to come back before.
+- After a few rounds, `zrun info` names the stops that give the least exp for their time.
 
 More: `zrun help`.
 
@@ -110,6 +122,25 @@ More: `zrun help`.
 
 - **Loadouts** decide what the number pad casts: **\*** attacks, **shift+\*** opens a fight,
   **.** rebuffs, **ctrl+.** heals. Build one with `zload build`. Each reinc can have several.
+- **Worth the cast:** `zload vuln golden spear 1M party 300k` casts a vulnerability first on
+  monsters worth 1M exp or more (300k in a party), and `zload open battlecry 2M` opens only on
+  the big ones. **\*** takes one step a press: vulnerability, opener, then attacks. Smaller
+  monsters skip the steps they aren't worth, and one never killed counts as big. The target
+  chip shows the next step. `zrun vuln never` or `zrun open 500k` changes it for one run.
+- **Chains:** the game's own `chain` command is followed. When it starts the next spell or skill
+  by itself, the status bar names that one, and **\*** doesn't send an opener your chain
+  already started. `zui setup` turns on `set nomore on` so your chain list can be read whole.
+- **Spells and skills that go on:** cryokinesis and molecular agitation show in the status bar
+  while they run, kiru and hurl axes until their last hit, and the chain after each is named.
+  In a fight **\*** asks for a second press before casting over a running cryokinesis or
+  molecular agitation, which any cast or skill would end.
+- **Necromancers:** your undead, dark servant and spirit show in the PARTY card with their
+  health, whether they fight or are chained, and a red "surgery" when they need it. `@m` in any
+  command is your minion (`cast cure undead at @m`), `zload buff unholy courage at minions`
+  keeps a buff on them, and **ctrl+\*** (`zcorpse`) uses a corpse best: bone armour, surgery,
+  the spirit, else your corpse action. `zload minions on` sends them in with your opening.
+- **Ogre mages with parallel process:** a spell and a skill going on at once each get a chip and
+  end on their own. With `zload dual on`, **\*** sends whichever of the two isn't going.
 - **Buffs on your party:** `zload buff iron will at tank` (or `at party`) keeps a buff up on
   others. The PARTY card tags each one and counts down its time, and `zbuffs` shows them all.
 - **Spell shortcuts:** `iw` casts iron will, `psc goblin` psychic crush at the goblin, and about
