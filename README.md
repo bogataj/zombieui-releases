@@ -93,6 +93,11 @@ stop from wherever you are, but walking on and fighting stay with you.
   something there. `zrun save` keeps it.
 - `zrun info` lists every stop with what you know of its monsters. `zrun go 3` or
   `zrun go orc` walks to a stop.
+- `zrun info <run>` sums a run up before you take it: its areas, how many moves a round takes,
+  guards on the way, every monster with exp, fight time, weakest resist and dangers, a difficulty
+  once you have considered enough of them, and your own finished rounds (time, exp, deaths).
+- `zrun danger captain stun` notes what a monster does (stun, aggro, hunts, summons, poison,
+  blind, party) at every stop it is a target. The tags go along when you share the run.
 - `zrun optional captain` marks a monster you may leave standing, such as one that is too hard
   to fight solo.
 - If a guard that stopped you before stands in the way to the next stop, the first press warns
