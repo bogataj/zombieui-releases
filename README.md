@@ -184,8 +184,11 @@ load it), and `zrun help` shows the commands.
   skip a stop forward or back without walking. On arriving, the stop's NPCs become your kill
   target (`@t`, `kt`), and the RUN card counts the kills. A target without a count is done when
   none of it is left in the room: the kill target moves on to the next NPC of the stop that is
-  there, and once the room is clear one press of **numpad /** walks on. A target you picked
-  yourself stays until your next kill.
+  there, and "Stop clear" says when the room is done. A target you picked yourself stays until
+  your next kill. **numpad /** walks on at once, even with targets still standing; `zrun confirm
+  on` makes it ask for a second press then. If an NPC known to block the way to the next stop
+  (one that has stopped you there before) is still in the room, the first press warns and the
+  second walks.
 - `zrun info` lists every stop: where, what to kill, and what your NPC knowledge says about it
   (exp, aggro, least resist, KYA). `zrun here` finds the stop you're at after a death or a
   detour, and `zrun go 3` walks to stop 3. `zrun go elmo` goes to the stop with that NPC
