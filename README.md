@@ -72,6 +72,15 @@ More: `zui help map`.
 
 - `goto <place>` walks there from anywhere: by the map, across the outworld, through gates,
   doors and rides. `goto` lists your places, `goto add <name>` saves where you stand.
+- **Inside an area**, left-click a room or exit name to walk there. Right-click it for route
+  details. For example, click **ZombieCity** above your room to leave the Arena. The **inside**
+  button switches to Mudlet's map, where a double-click on an exit arrow also walks through it.
+- **Click the outworld map** (or a booth, Castle Area or field grid) in the panel: a left click
+  walks to that square, a right click tells what is known of it, with a link to walk. A click
+  on a city walks into it: ZombieCity to Central Square, other cities through their nearest gate.
+  On a city's plan, a click on a place's name (Bank, Tinker, Adv.Guild...) walks into it, and a
+  click elsewhere walks to the nearest street. When two buildings are as near a name, you pick
+  which one it is once.
 - Long walks run in brief mode and switch back to verbose when they are over (`goto brief off` walks verbose). `zstop` stops a walk.
 - `goto home` and `goto castle` lead to your castle. `goto <player>` leads to a player's
   castle, and `goto <guild>` to a guild once you have saved it with `goto add <guild>`.
