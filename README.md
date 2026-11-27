@@ -122,6 +122,8 @@ More: `zrun help`.
 
 - **Loadouts** decide what the number pad casts: **\*** attacks, **shift+\*** opens a fight,
   **.** rebuffs, **ctrl+.** heals. Build one with `zload build`. Each reinc can have several.
+  The builder suggests repeatable attacks, direct heals and compatible buffs for yourself.
+  It also lists situational abilities for manual selection.
 - **Worth the cast:** `zload vuln golden spear 1M party 300k` casts a vulnerability first on
   monsters worth 1M exp or more (300k in a party), and `zload open battlecry 2M` opens only on
   the big ones. **\*** takes one step a press: vulnerability, opener, then attacks. Smaller
@@ -167,7 +169,9 @@ More: `zui help selling` and `zui help chests`.
 ## Cards and information
 
 - **PARTY** follows joins, leaves and leaders as they happen, with each member's hp and sp.
-- **EFFECTS** shows your buffs and when they run out. **STATS** shows your score, and
+- **BUFFS** groups your buffs and timers by type. Greater protection and stun protection
+  stay visible even when none is seen, and missing buffs from your loadout are marked down.
+  **STATS** shows your score, and
   **SESSION** this session's exp, kills, deaths, the reboot and the time of day.
 - The status bar shows when you are stunned, poisoned or scarred.
 - `zui layout` rearranges the cards, map and chat around the main window.
