@@ -49,8 +49,9 @@ A key you have set yourself in Mudlet stays yours.
 
 ZombieMUD sends no map data, so ZombieUI reads every room from the game's text. With
 `zmap on`, each room you step into from a known room is added to the map. Right-click the map
-for walking there or telling the mapper where you are. The **3D** button above it switches to
-Mudlet's 3D map.
+for walking there or telling the mapper where you are. The **⋯** button above it switches to
+Mudlet's 3D map (and its style and angle) and opens the layout editor. In a city, the **city**
+button shows the city's own plan with you on it.
 
 - **Exploring:** `zmap next` walks to the nearest exit you haven't tried and tries it. It
   opens closed doors on the way. If a guard or lock stops you, the next press tries elsewhere.
@@ -169,12 +170,14 @@ More: `zui help selling` and `zui help chests`.
 ## Cards and information
 
 - **PARTY** follows joins, leaves and leaders as they happen, with each member's hp and sp.
-- **BUFFS** groups your buffs and timers by type. Greater protection and stun protection
-  stay visible even when none is seen, and missing buffs from your loadout are marked down.
+- **BUFFS** groups your buffs and timers by type, a row each with its state on the right.
+  Missing buffs from your loadout are listed first in red as down, and a line says when you
+  have no greater or stun protection at all.
   **STATS** shows your score, and
   **SESSION** this session's exp, kills, deaths, the reboot and the time of day.
 - The status bar shows when you are stunned, poisoned or scarred.
-- `zui layout` rearranges the cards, map and chat around the main window.
+- `zui layout` rearranges the cards, map and chat around the main window. A card is only as
+  tall as what it shows, and the map or chat takes the rest (`zui layout fit off` to turn it off).
 
 More: `zui help you`.
 
