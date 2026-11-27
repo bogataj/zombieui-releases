@@ -72,9 +72,8 @@ More: `zui help map`.
 
 - `goto <place>` walks there from anywhere: by the map, across the outworld, through gates,
   doors and rides. `goto` lists your places, `goto add <name>` saves where you stand.
-- **Inside an area**, left-click a room or exit name to walk there. Right-click it for route
-  details. For example, click **ZombieCity** above your room to leave the Arena. The **inside**
-  button switches to Mudlet's map, where a double-click on an exit arrow also walks through it.
+- **Inside an area**, double-click rooms in Mudlet's map to walk there. When the way out is
+  known, click **exit** in the map header to leave the area.
 - **Click the outworld map** (or a booth, Castle Area or field grid) in the panel: a left click
   walks to that square, a right click tells what is known of it, with a link to walk. A click
   on a city walks into it: ZombieCity to Central Square, other cities through their nearest gate.
